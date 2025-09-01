@@ -54,6 +54,90 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    
+    /* Table responsive styles */
+    .table-container {
+      overflow-x: auto;
+      width: 100%;
+    }
+    
+    .responsive-table {
+      width: 100%;
+      min-width: 800px;
+    }
+    
+    .truncate-cell {
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .has-tooltip {
+      position: relative;
+      cursor: help;
+    }
+    
+    .has-tooltip:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px;
+      background-color: #333;
+      color: white;
+      border-radius: 4px;
+      font-size: 14px;
+      white-space: normal;
+      width: 250px;
+      z-index: 100;
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background-color: white;
+      padding: 24px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    /* Card view for mobile */
+    @media (max-width: 768px) {
+      .card-view {
+        display: block;
+      }
+      
+      .table-view {
+        display: none;
+      }
+    }
+    
+    @media (min-width: 769px) {
+      .card-view {
+        display: none;
+      }
+      
+      .table-view {
+        display: block;
+      }
+    }
   </style>
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen">
@@ -299,49 +383,208 @@
       <section id="activity" class="content-section">
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Recent Activity</h2>
         
-        <div class="bg-white rounded-xl shadow-sm p-6">
+        <!-- Toggle View Buttons -->
+        <div class="flex justify-end mb-4">
+          <button id="tableViewBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-l-lg text-sm font-medium">
+            <i class="fas fa-table mr-1"></i> Tabel
+          </button>
+          <button id="cardViewBtn" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-r-lg text-sm font-medium">
+            <i class="fas fa-th-large mr-1"></i> Kartu
+          </button>
+        </div>
+        
+        <!-- Table View -->
+        <div class="table-view bg-white rounded-xl shadow-sm p-6">
           <div class="flex justify-between items-center mb-6">
             <h3 class="text-lg font-bold text-gray-800">Login History</h3>
             <button class="text-indigo-600 text-sm font-medium">View all</button>
           </div>
           
-          <div class="overflow-x-auto">
-            <table class="w-full">
+          <div class="table-container">
+            <table class="responsive-table w-full">
               <thead>
-                <tr class="text-left text-gray-500 text-sm">
-                  <th class="pb-4">Date</th>
-                  <th class="pb-4">Device</th>
-                  <th class="pb-4">Location</th>
-                  <th class="pb-4">Status</th>
+                <tr class="text-left text-gray-500 text-sm border-b">
+                  <th class="pb-4 px-4">Date</th>
+                  <th class="pb-4 px-4">Device</th>
+                  <th class="pb-4 px-4">Location</th>
+                  <th class="pb-4 px-4">Details</th>
+                  <th class="pb-4 px-4">Status</th>
+                  <th class="pb-4 px-4">Action</th>
                 </tr>
               </thead>
               <tbody class="divide-y">
-                <tr>
-                  <td class="py-3 text-sm">Oct 15, 2023 10:30 AM</td>
-                  <td class="py-3 text-sm">Chrome on Windows</td>
-                  <td class="py-3 text-sm">Jakarta, Indonesia</td>
-                  <td class="py-3"><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Success</span></td>
+                <tr class="hover:bg-gray-50">
+                  <td class="py-3 text-sm px-4">Oct 15, 2023 10:30 AM</td>
+                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Chrome 117.0.5938.92 pada Windows 11 Pro">
+                    Chrome 117.0.5938.92 pada Windows 11 Pro
+                  </td>
+                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Jakarta, Indonesia (IP: 192.168.1.101)">
+                    Jakarta, Indonesia (IP: 192.168.1.101)
+                  </td>
+                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Login dari jaringan kantor, menggunakan authentication two-factor">
+                    Login dari jaringan kantor, menggunakan authentication two-factor
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Success</span>
+                  </td>
+                  <td class="py-3 px-4">
+                    <button class="text-blue-600 hover:text-blue-800 detail-btn" data-index="0">
+                      <i class="fas fa-info-circle"></i>
+                    </button>
+                  </td>
                 </tr>
-                <tr>
-                  <td class="py-3 text-sm">Oct 14, 2023 8:15 PM</td>
-                  <td class="py-3 text-sm">Safari on iPhone</td>
-                  <td class="py-3 text-sm">Bandung, Indonesia</td>
-                  <td class="py-3"><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Success</span></td>
+                <tr class="hover:bg-gray-50">
+                  <td class="py-3 text-sm px-4">Oct 14, 2023 8:15 PM</td>
+                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Safari 16.6 pada iPhone 13 iOS 16.6">
+                    Safari 16.6 pada iPhone 13 iOS 16.6
+                  </td>
+                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Bandung, Indonesia (IP: 192.168.43.26)">
+                    Bandung, Indonesia (IP: 192.168.43.26)
+                  </td>
+                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Login dari jaringan seluler Telkomsel, menggunakan fingerprint authentication">
+                    Login dari jaringan seluler Telkomsel, menggunakan fingerprint authentication
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Success</span>
+                  </td>
+                  <td class="py-3 px-4">
+                    <button class="text-blue-600 hover:text-blue-800 detail-btn" data-index="1">
+                      <i class="fas fa-info-circle"></i>
+                    </button>
+                  </td>
                 </tr>
-                <tr>
-                  <td class="py-3 text-sm">Oct 12, 2023 3:45 PM</td>
-                  <td class="py-3 text-sm">Firefox on Mac</td>
-                  <td class="py-3 text-sm">Surabaya, Indonesia</td>
-                  <td class="py-3"><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Success</span></td>
+                <tr class="hover:bg-gray-50">
+                  <td class="py-3 text-sm px-4">Oct 12, 2023 3:45 PM</td>
+                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Firefox 118.0.1 pada macOS Ventura 13.5.2">
+                    Firefox 118.0.1 pada macOS Ventura 13.5.2
+                  </td>
+                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Surabaya, Indonesia (IP: 10.25.136.42)">
+                    Surabaya, Indonesia (IP: 10.25.136.42)
+                  </td>
+                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Login dari jaringan wifi kafe, menggunakan password dan kode OTP yang dikirim via email">
+                    Login dari jaringan wifi kafe, menggunakan password dan kode OTP yang dikirim via email
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Success</span>
+                  </td>
+                  <td class="py-3 px-4">
+                    <button class="text-blue-600 hover:text-blue-800 detail-btn" data-index="2">
+                      <i class="fas fa-info-circle"></i>
+                    </button>
+                  </td>
                 </tr>
-                <tr>
-                  <td class="py-3 text-sm">Oct 10, 2023 9:20 AM</td>
-                  <td class="py-3 text-sm">Chrome on Android</td>
-                  <td class="py-3 text-sm">Yogyakarta, Indonesia</td>
-                  <td class="py-3"><span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">Failed</span></td>
+                <tr class="hover:bg-gray-50">
+                  <td class="py-3 text-sm px-4">Oct 10, 2023 9:20 AM</td>
+                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21 Android 13">
+                    Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21 Android 13
+                  </td>
+                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Yogyakarta, Indonesia (IP: 172.16.254.12)">
+                    Yogyakarta, Indonesia (IP: 172.16.254.12)
+                  </td>
+                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Percobaan login dengan password yang salah sebanyak 3 kali, akun terkunci sementara selama 15 menit">
+                    Percobaan login dengan password yang salah sebanyak 3 kali, akun terkunci sementara selama 15 menit
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">Failed</span>
+                  </td>
+                  <td class="py-3 px-4">
+                    <button class="text-blue-600 hover:text-blue-800 detail-btn" data-index="3">
+                      <i class="fas fa-info-circle"></i>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+        
+        <!-- Card View -->
+        <div class="card-view bg-white rounded-xl shadow-sm p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-lg font-bold text-gray-800">Login History</h3>
+            <button class="text-indigo-600 text-sm font-medium">View all</button>
+          </div>
+          
+          <div class="grid grid-cols-1 gap-4">
+            <!-- Card 1 -->
+            <div class="border rounded-lg p-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-semibold text-gray-800">15 Okt 2023, 10:30:45 WIB</h3>
+                  <p class="text-sm text-gray-600 mt-1">Chrome 117.0.5938.92 pada Windows 11 Pro</p>
+                </div>
+                <span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full">Berhasil</span>
+              </div>
+              <div class="mt-3 text-sm">
+                <p class="text-gray-700"><span class="font-medium">Lokasi:</span> Jakarta, Indonesia (IP: 192.168.1.101)</p>
+                <p class="text-gray-700 mt-1"><span class="font-medium">Detail:</span> Login dari jaringan kantor, menggunakan authentication two-factor</p>
+              </div>
+              <div class="mt-3 flex justify-end">
+                <button class="text-blue-600 text-sm detail-btn" data-index="0">
+                  <i class="fas fa-info-circle mr-1"></i> Detail Lengkap
+                </button>
+              </div>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="border rounded-lg p-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-semibold text-gray-800">14 Okt 2023, 20:15:32 WIB</h3>
+                  <p class="text-sm text-gray-600 mt-1">Safari 16.6 pada iPhone 13 iOS 16.6</p>
+                </div>
+                <span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full">Berhasil</span>
+              </div>
+              <div class="mt-3 text-sm">
+                <p class="text-gray-700"><span class="font-medium">Lokasi:</span> Bandung, Indonesia (IP: 192.168.43.26)</p>
+                <p class="text-gray-700 mt-1"><span class="font-medium">Detail:</span> Login dari jaringan seluler Telkomsel, menggunakan fingerprint authentication</p>
+              </div>
+              <div class="mt-3 flex justify-end">
+                <button class="text-blue-600 text-sm detail-btn" data-index="1">
+                  <i class="fas fa-info-circle mr-1"></i> Detail Lengkap
+                </button>
+              </div>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="border rounded-lg p-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-semibold text-gray-800">12 Okt 2023, 15:45:21 WIB</h3>
+                  <p class="text-sm text-gray-600 mt-1">Firefox 118.0.1 pada macOS Ventura 13.5.2</p>
+                </div>
+                <span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full">Berhasil</span>
+              </div>
+              <div class="mt-3 text-sm">
+                <p class="text-gray-700"><span class="font-medium">Lokasi:</span> Surabaya, Indonesia (IP: 10.25.136.42)</p>
+                <p class="text-gray-700 mt-1"><span class="font-medium">Detail:</span> Login dari jaringan wifi kafe, menggunakan password dan kode OTP</p>
+              </div>
+              <div class="mt-3 flex justify-end">
+                <button class="text-blue-600 text-sm detail-btn" data-index="2">
+                  <i class="fas fa-info-circle mr-1"></i> Detail Lengkap
+                </button>
+              </div>
+            </div>
+            
+            <!-- Card 4 -->
+            <div class="border rounded-lg p-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-semibold text-gray-800">10 Okt 2023, 09:20:15 WIB</h3>
+                  <p class="text-sm text-gray-600 mt-1">Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21</p>
+                </div>
+                <span class="px-3 py-1 bg-red-100 text-red-700 text-xs rounded-full">Gagal</span>
+              </div>
+              <div class="mt-3 text-sm">
+                <p class="text-gray-700"><span class="font-medium">Lokasi:</span> Yogyakarta, Indonesia (IP: 172.16.254.12)</p>
+                <p class="text-gray-700 mt-1"><span class="font-medium">Detail:</span> Percobaan login dengan password yang salah sebanyak 3 kali</p>
+              </div>
+              <div class="mt-3 flex justify-end">
+                <button class="text-blue-600 text-sm detail-btn" data-index="3">
+                  <i class="fas fa-info-circle mr-1"></i> Detail Lengkap
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -355,7 +598,58 @@
     </div>
   </footer>
 
+  <!-- Modal untuk Detail -->
+  <div id="detailModal" class="modal">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold text-gray-800">Detail Login</h3>
+        <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="modalContent" class="space-y-4">
+        <!-- Konten akan diisi oleh JavaScript -->
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Data lengkap untuk modal
+    const loginData = [
+      {
+        date: "15 Oktober 2023, 10:30:45 WIB",
+        device: "Chrome 117.0.5938.92 pada Windows 11 Pro",
+        location: "Jakarta, Indonesia (IP: 192.168.1.101)",
+        details: "Login dari jaringan kantor, menggunakan authentication two-factor. Login ini dilakukan dari jaringan internal perusahaan yang terjamin keamanannya.",
+        status: "Berhasil",
+        statusClass: "bg-green-100 text-green-700"
+      },
+      {
+        date: "14 Oktober 2023, 20:15:32 WIB",
+        device: "Safari 16.6 pada iPhone 13 iOS 16.6",
+        location: "Bandung, Indonesia (IP: 192.168.43.26)",
+        details: "Login dari jaringan seluler Telkomsel, menggunakan fingerprint authentication. Perangkat ini telah terdaftar sebagai perangkat terpercaya.",
+        status: "Berhasil",
+        statusClass: "bg-green-100 text-green-700"
+      },
+      {
+        date: "12 Oktober 2023, 15:45:21 WIB",
+        device: "Firefox 118.0.1 pada macOS Ventura 13.5.2",
+        location: "Surabaya, Indonesia (IP: 10.25.136.42)",
+        details: "Login dari jaringan wifi kafe, menggunakan password dan kode OTP yang dikirim via email. Login dari jaringan publik sehingga memerlukan verifikasi tambahan.",
+        status: "Berhasil",
+        statusClass: "bg-green-100 text-green-700"
+      },
+      {
+        date: "10 Oktober 2023, 09:20:15 WIB",
+        device: "Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21 Android 13",
+        location: "Yogyakarta, Indonesia (IP: 172.16.254.12)",
+        details: "Percobaan login dengan password yang salah sebanyak 3 kali, akun terkunci sementara selama 15 menit. Setelah periode terkunci, pengguna berhasil login dengan reset password.",
+        status: "Gagal",
+        statusClass: "bg-red-100 text-red-700"
+      }
+    ];
+
     // Navigation functionality
     document.querySelectorAll('.nav-item').forEach(item => {
       item.addEventListener('click', function(e) {
@@ -384,6 +678,71 @@
     document.getElementById('logoutButton').addEventListener('click', function() {
       if (confirm('Are you sure you want to logout?')) {
         window.location.href = 'index.html'; // Redirect to login page
+      }
+    });
+    
+    // Toggle view functionality
+    document.getElementById('tableViewBtn').addEventListener('click', function() {
+      document.getElementById('tableViewBtn').classList.add('bg-indigo-600', 'text-white');
+      document.getElementById('tableViewBtn').classList.remove('bg-gray-200', 'text-gray-700');
+      document.getElementById('cardViewBtn').classList.add('bg-gray-200', 'text-gray-700');
+      document.getElementById('cardViewBtn').classList.remove('bg-indigo-600', 'text-white');
+      document.querySelector('.table-view').style.display = 'block';
+      document.querySelector('.card-view').style.display = 'none';
+    });
+
+    document.getElementById('cardViewBtn').addEventListener('click', function() {
+      document.getElementById('cardViewBtn').classList.add('bg-indigo-600', 'text-white');
+      document.getElementById('cardViewBtn').classList.remove('bg-gray-200', 'text-gray-700');
+      document.getElementById('tableViewBtn').classList.add('bg-gray-200', 'text-gray-700');
+      document.getElementById('tableViewBtn').classList.remove('bg-indigo-600', 'text-white');
+      document.querySelector('.card-view').style.display = 'block';
+      document.querySelector('.table-view').style.display = 'none';
+    });
+    
+    // Modal functionality
+    const modal = document.getElementById('detailModal');
+    const modalContent = document.getElementById('modalContent');
+    
+    document.querySelectorAll('.detail-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const index = parseInt(this.getAttribute('data-index'));
+        const data = loginData[index];
+        
+        modalContent.innerHTML = `
+          <div>
+            <p class="text-sm text-gray-600">Tanggal & Waktu</p>
+            <p class="font-medium">${data.date}</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-600">Perangkat & Browser</p>
+            <p class="font-medium">${data.device}</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-600">Lokasi & Alamat IP</p>
+            <p class="font-medium">${data.location}</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-600">Detail Tambahan</p>
+            <p class="font-medium">${data.details}</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-600">Status</p>
+            <span class="px-3 py-1 ${data.statusClass} text-xs rounded-full">${data.status}</span>
+          </div>
+        `;
+        
+        modal.style.display = 'flex';
+      });
+    });
+    
+    document.getElementById('closeModal').addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+    
+    window.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
       }
     });
   </script>
