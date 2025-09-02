@@ -72,7 +72,7 @@
 
       .responsive-table {
         width: 100%;
-        min-width: 800px;
+        min-width: 600px;
       }
 
       .truncate-cell {
@@ -204,41 +204,46 @@
         transition: transform 0.3s ease;
       }
 
-      /* Remove Details column from main view */
+      /* Hide Location, Details, and Status columns from main view */
+      .collapse-table thead th:nth-child(3),
+      .collapse-table tbody td:nth-child(3),
       .collapse-table thead th:nth-child(4),
-      .collapse-table tbody td:nth-child(4) {
+      .collapse-table tbody td:nth-child(4),
+      .collapse-table thead th:nth-child(5),
+      .collapse-table tbody td:nth-child(5) {
         display: none;
       }
 
       /* Adjust column widths */
       .collapse-table th:nth-child(1),
       .collapse-table td:nth-child(1) {
-        width: 15%;
+        width: 20%;
       }
 
       .collapse-table th:nth-child(2),
       .collapse-table td:nth-child(2) {
-        width: 25%;
-      }
-
-      .collapse-table th:nth-child(3),
-      .collapse-table td:nth-child(3) {
-        width: 25%;
-      }
-
-      .collapse-table th:nth-child(5),
-      .collapse-table td:nth-child(5) {
-        width: 10%;
+        width: 60%;
       }
 
       .collapse-table th:nth-child(6),
       .collapse-table td:nth-child(6) {
-        width: 5%;
+        width: 20%;
+        text-align: center;
       }
 
       @media (max-width: 768px) {
         .collapse-table .detail-grid {
           grid-template-columns: 1fr;
+        }
+        
+        .collapse-table th:nth-child(1),
+        .collapse-table td:nth-child(1) {
+          width: 40%;
+        }
+
+        .collapse-table th:nth-child(2),
+        .collapse-table td:nth-child(2) {
+          width: 40%;
         }
       }
     </style>
@@ -448,7 +453,7 @@
                   class="block text-gray-700 text-sm font-medium mb-2"
                   for="email"
                   >Email</label
-                >
+                  >
                 <input
                   type="email"
                   id="email"
@@ -515,28 +520,33 @@ I'm a web developer with passion for creating beautiful and functional user inte
                     <th class="pb-4 px-4">Date</th>
                     <th class="pb-4 px-4">Device</th>
                     <th class="pb-4 px-4">Location</th>
+                    <th class="pb-4 px-4">Details</th>
                     <th class="pb-4 px-4">Status</th>
-                    <th class="pb-4 px-4">Action</th>
+                    <th class="pb-4 px-4 text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y">
                   <!-- Baris 1 -->
-                  <tr
-                    class="main-row hover:bg-gray-50"
-                    onclick="toggleRow(this)"
-                  >
+                  <tr class="main-row hover:bg-gray-50">
                     <td class="py-3 text-sm px-4">Oct 15, 2023 10:30 AM</td>
                     <td
-                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
-                      data-tooltip="Chrome 117.0.5938.92 pada Windows 11 Pro"
+                      class="py-3 text-sm px-4 truncate-cell"
+                      title="Chrome 117.0.5938.92 pada Windows 11 Pro"
                     >
                       Chrome 117.0.5938.92 pada Windows 11 Pro
                     </td>
                     <td
-                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
-                      data-tooltip="Jakarta, Indonesia (IP: 192.168.1.101)"
+                      class="py-3 text-sm px-4"
+                      title="Jakarta, Indonesia (IP: 192.168.1.101)"
                     >
                       Jakarta, Indonesia (IP: 192.168.1.101)
+                    </td>
+                    <td
+                      class="py-3 text-sm px-4"
+                      title="Login dari jaringan kantor, menggunakan authentication two-factor"
+                    >
+                      Login dari jaringan kantor, menggunakan authentication
+                      two-factor
                     </td>
                     <td class="py-3 px-4">
                       <span
@@ -544,28 +554,35 @@ I'm a web developer with passion for creating beautiful and functional user inte
                         >Success</span
                       >
                     </td>
-                    <td class="py-3 px-4">
-                      <button class="text-blue-600 hover:text-blue-800">
+                    <td class="py-3 px-4 text-center">
+                      <button
+                        class="text-blue-600 hover:text-blue-800 expand-btn"
+                      >
                         <i class="fas fa-chevron-down"></i>
                       </button>
                     </td>
                   </tr>
                   <tr class="detail-row">
-                    <td colspan="5">
+                    <td colspan="6">
                       <div class="detail-content">
                         <div class="detail-grid">
                           <div class="detail-item">
-                            <div class="detail-label">Details</div>
+                            <div class="detail-label">Location</div>
                             <div class="detail-value">
-                              Login dari jaringan kantor, menggunakan
-                              authentication two-factor
+                              Jakarta, Indonesia (IP: 192.168.1.101)
                             </div>
                           </div>
                           <div class="detail-item">
-                            <div class="detail-label">Additional Info</div>
+                            <div class="detail-label">Details</div>
                             <div class="detail-value">
-                              Login ini dilakukan dari jaringan internal
-                              perusahaan yang terjamin keamanannya.
+                              Login dari jaringan kantor, menggunakan authentication two-factor. 
+                              Login ini dilakukan dari jaringan internal perusahaan yang terjamin keamanannya.
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Status</div>
+                            <div class="detail-value">
+                              <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Success</span>
                             </div>
                           </div>
                         </div>
@@ -574,22 +591,26 @@ I'm a web developer with passion for creating beautiful and functional user inte
                   </tr>
 
                   <!-- Baris 2 -->
-                  <tr
-                    class="main-row hover:bg-gray-50"
-                    onclick="toggleRow(this)"
-                  >
+                  <tr class="main-row hover:bg-gray-50">
                     <td class="py-3 text-sm px-4">Oct 14, 2023 8:15 PM</td>
                     <td
-                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
-                      data-tooltip="Safari 16.6 pada iPhone 13 iOS 16.6"
+                      class="py-3 text-sm px-4 truncate-cell"
+                      title="Safari 16.6 pada iPhone 13 iOS 16.6"
                     >
                       Safari 16.6 pada iPhone 13 iOS 16.6
                     </td>
                     <td
-                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
-                      data-tooltip="Bandung, Indonesia (IP: 192.168.43.26)"
+                      class="py-3 text-sm px-4"
+                      title="Bandung, Indonesia (IP: 192.168.43.26)"
                     >
                       Bandung, Indonesia (IP: 192.168.43.26)
+                    </td>
+                    <td
+                      class="py-3 text-sm px-4"
+                      title="Login dari jaringan seluler Telkomsel, menggunakan fingerprint authentication"
+                    >
+                      Login dari jaringan seluler Telkomsel, menggunakan
+                      fingerprint authentication
                     </td>
                     <td class="py-3 px-4">
                       <span
@@ -597,28 +618,35 @@ I'm a web developer with passion for creating beautiful and functional user inte
                         >Success</span
                       >
                     </td>
-                    <td class="py-3 px-4">
-                      <button class="text-blue-600 hover:text-blue-800">
+                    <td class="py-3 px-4 text-center">
+                      <button
+                        class="text-blue-600 hover:text-blue-800 expand-btn"
+                      >
                         <i class="fas fa-chevron-down"></i>
                       </button>
                     </td>
                   </tr>
                   <tr class="detail-row">
-                    <td colspan="5">
+                    <td colspan="6">
                       <div class="detail-content">
                         <div class="detail-grid">
                           <div class="detail-item">
-                            <div class="detail-label">Details</div>
+                            <div class="detail-label">Location</div>
                             <div class="detail-value">
-                              Login dari jaringan seluler Telkomsel, menggunakan
-                              fingerprint authentication
+                              Bandung, Indonesia (IP: 192.168.43.26)
                             </div>
                           </div>
                           <div class="detail-item">
-                            <div class="detail-label">Additional Info</div>
+                            <div class="detail-label">Details</div>
                             <div class="detail-value">
-                              Perangkat ini telah terdaftar sebagai perangkat
-                              terpercaya.
+                              Login dari jaringan seluler Telkomsel, menggunakan fingerprint authentication. 
+                              Perangkat ini telah terdaftar sebagai perangkat terpercaya.
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Status</div>
+                            <div class="detail-value">
+                              <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Success</span>
                             </div>
                           </div>
                         </div>
@@ -627,22 +655,26 @@ I'm a web developer with passion for creating beautiful and functional user inte
                   </tr>
 
                   <!-- Baris 3 -->
-                  <tr
-                    class="main-row hover:bg-gray-50"
-                    onclick="toggleRow(this)"
-                  >
+                  <tr class="main-row hover:bg-gray-50">
                     <td class="py-3 text-sm px-4">Oct 12, 2023 3:45 PM</td>
                     <td
-                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
-                      data-tooltip="Firefox 118.0.1 pada macOS Ventura 13.5.2"
+                      class="py-3 text-sm px-4 truncate-cell"
+                      title="Firefox 118.0.1 pada macOS Ventura 13.5.2"
                     >
                       Firefox 118.0.1 pada macOS Ventura 13.5.2
                     </td>
                     <td
-                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
-                      data-tooltip="Surabaya, Indonesia (IP: 10.25.136.42)"
+                      class="py-3 text-sm px-4"
+                      title="Surabaya, Indonesia (IP: 10.25.136.42)"
                     >
                       Surabaya, Indonesia (IP: 10.25.136.42)
+                    </td>
+                    <td
+                      class="py-3 text-sm px-4"
+                      title="Login dari jaringan wifi kafe, menggunakan password dan kode OTP yang dikirim via email"
+                    >
+                      Login dari jaringan wifi kafe, menggunakan password dan
+                      kode OTP yang dikirim via email
                     </td>
                     <td class="py-3 px-4">
                       <span
@@ -650,28 +682,35 @@ I'm a web developer with passion for creating beautiful and functional user inte
                         >Success</span
                       >
                     </td>
-                    <td class="py-3 px-4">
-                      <button class="text-blue-600 hover:text-blue-800">
+                    <td class="py-3 px-4 text-center">
+                      <button
+                        class="text-blue-600 hover:text-blue-800 expand-btn"
+                      >
                         <i class="fas fa-chevron-down"></i>
                       </button>
                     </td>
                   </tr>
                   <tr class="detail-row">
-                    <td colspan="5">
+                    <td colspan="6">
                       <div class="detail-content">
                         <div class="detail-grid">
                           <div class="detail-item">
-                            <div class="detail-label">Details</div>
+                            <div class="detail-label">Location</div>
                             <div class="detail-value">
-                              Login dari jaringan wifi kafe, menggunakan
-                              password dan kode OTP yang dikirim via email
+                              Surabaya, Indonesia (IP: 10.25.136.42)
                             </div>
                           </div>
                           <div class="detail-item">
-                            <div class="detail-label">Additional Info</div>
+                            <div class="detail-label">Details</div>
                             <div class="detail-value">
-                              Login dari jaringan publik sehingga memerlukan
-                              verifikasi tambahan.
+                              Login dari jaringan wifi kafe, menggunakan password dan kode OTP yang dikirim via email. 
+                              Login dari jaringan publik sehingga memerlukan verifikasi tambahan.
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Status</div>
+                            <div class="detail-value">
+                              <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Success</span>
                             </div>
                           </div>
                         </div>
@@ -680,23 +719,27 @@ I'm a web developer with passion for creating beautiful and functional user inte
                   </tr>
 
                   <!-- Baris 4 -->
-                  <tr
-                    class="main-row hover:bg-gray-50"
-                    onclick="toggleRow(this)"
-                  >
+                  <tr class="main-row hover:bg-gray-50">
                     <td class="py-3 text-sm px-4">Oct 10, 2023 9:20 AM</td>
                     <td
-                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
-                      data-tooltip="Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21 Android 13"
+                      class="py-3 text-sm px-4 truncate-cell"
+                      title="Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21 Android 13"
                     >
                       Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21
                       Android 13
                     </td>
                     <td
-                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
-                      data-tooltip="Yogyakarta, Indonesia (IP: 172.16.254.12)"
+                      class="py-3 text-sm px-4"
+                      title="Yogyakarta, Indonesia (IP: 172.16.254.12)"
                     >
                       Yogyakarta, Indonesia (IP: 172.16.254.12)
+                    </td>
+                    <td
+                      class="py-3 text-sm px-4"
+                      title="Percobaan login dengan password yang salah sebanyak 3 kali, akun terkunci sementara selama 15 menit"
+                    >
+                      Percobaan login dengan password yang salah sebanyak 3
+                      kali, akun terkunci sementara selama 15 menit
                     </td>
                     <td class="py-3 px-4">
                       <span
@@ -704,29 +747,35 @@ I'm a web developer with passion for creating beautiful and functional user inte
                         >Failed</span
                       >
                     </td>
-                    <td class="py-3 px-4">
-                      <button class="text-blue-600 hover:text-blue-800">
+                    <td class="py-3 px-4 text-center">
+                      <button
+                        class="text-blue-600 hover:text-blue-800 expand-btn"
+                      >
                         <i class="fas fa-chevron-down"></i>
                       </button>
                     </td>
                   </tr>
                   <tr class="detail-row">
-                    <td colspan="5">
+                    <td colspan="6">
                       <div class="detail-content">
                         <div class="detail-grid">
                           <div class="detail-item">
-                            <div class="detail-label">Details</div>
+                            <div class="detail-label">Location</div>
                             <div class="detail-value">
-                              Percobaan login dengan password yang salah
-                              sebanyak 3 kali, akun terkunci sementara selama 15
-                              menit
+                              Yogyakarta, Indonesia (IP: 172.16.254.12)
                             </div>
                           </div>
                           <div class="detail-item">
-                            <div class="detail-label">Additional Info</div>
+                            <div class="detail-label">Details</div>
                             <div class="detail-value">
-                              Setelah periode terkunci, pengguna berhasil login
-                              dengan reset password.
+                              Percobaan login dengan password yang salah sebanyak 3 kali, akun terkunci sementara selama 15 menit. 
+                              Setelah periode terkunci, pengguna berhasil login dengan reset password.
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Status</div>
+                            <div class="detail-value">
+                              <span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">Failed</span>
                             </div>
                           </div>
                         </div>
@@ -742,9 +791,6 @@ I'm a web developer with passion for creating beautiful and functional user inte
           <div class="card-view bg-white rounded-xl shadow-sm p-6">
             <div class="flex justify-between items-center mb-6">
               <h3 class="text-lg font-bold text-gray-800">Login History</h3>
-              <!-- <button class="text-indigo-600 text-sm font-medium">
-                View all
-              </button> -->
             </div>
 
             <div class="grid grid-cols-1 gap-4">
