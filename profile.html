@@ -1,715 +1,1048 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Profile</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-    
-    body {
-      font-family: 'Poppins', sans-serif;
-    }
-    
-    .profile-header {
-      background: linear-gradient(120deg, #4f46e5, #7c3aed);
-    }
-    
-    .stats-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .stats-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .nav-item {
-      transition: all 0.3s ease;
-    }
-    
-    .nav-item:hover {
-      background-color: #f3f4f6;
-      border-left: 4px solid #4f46e5;
-    }
-    
-    .active {
-      background-color: #f3f4f6;
-      border-left: 4px solid #4f46e5;
-      color: #4f46e5;
-    }
-    
-    .content-section {
-      display: none;
-    }
-    
-    .content-section.active {
-      display: block;
-      animation: fadeIn 0.5s ease;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    /* Table responsive styles */
-    .table-container {
-      overflow-x: auto;
-      width: 100%;
-    }
-    
-    .responsive-table {
-      width: 100%;
-      min-width: 800px;
-    }
-    
-    .truncate-cell {
-      max-width: 200px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    
-    .has-tooltip {
-      position: relative;
-      cursor: help;
-    }
-    
-    .has-tooltip:hover::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 8px;
-      background-color: #333;
-      color: white;
-      border-radius: 4px;
-      font-size: 14px;
-      white-space: normal;
-      width: 250px;
-      z-index: 100;
-    }
-    
-    /* Modal styles */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .modal-content {
-      background-color: white;
-      padding: 24px;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 600px;
-      max-height: 80vh;
-      overflow-y: auto;
-    }
-    
-    /* Card view for mobile */
-    @media (max-width: 768px) {
-      .card-view {
-        display: block;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+      body {
+        font-family: "Poppins", sans-serif;
       }
-      
-      .table-view {
+
+      .profile-header {
+        background: linear-gradient(120deg, #4f46e5, #7c3aed);
+      }
+
+      .stats-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-item {
+        transition: all 0.3s ease;
+      }
+
+      .nav-item:hover {
+        background-color: #f3f4f6;
+        border-left: 4px solid #4f46e5;
+      }
+
+      .active {
+        background-color: #f3f4f6;
+        border-left: 4px solid #4f46e5;
+        color: #4f46e5;
+      }
+
+      .content-section {
         display: none;
       }
-    }
-    
-    @media (min-width: 769px) {
-      .card-view {
+
+      .content-section.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Table responsive styles */
+      .table-container {
+        overflow-x: auto;
+        width: 100%;
+      }
+
+      .responsive-table {
+        width: 100%;
+        min-width: 800px;
+      }
+
+      .truncate-cell {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .has-tooltip {
+        position: relative;
+        cursor: help;
+      }
+
+      .has-tooltip:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 8px;
+        background-color: #333;
+        color: white;
+        border-radius: 4px;
+        font-size: 14px;
+        white-space: normal;
+        width: 250px;
+        z-index: 100;
+      }
+
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: white;
+        padding: 24px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+
+      /* Card view for mobile */
+      @media (max-width: 768px) {
+        .card-view {
+          display: block;
+        }
+
+        .table-view {
+          display: none;
+        }
+      }
+
+      @media (min-width: 769px) {
+        .card-view {
+          display: none;
+        }
+
+        .table-view {
+          display: block;
+        }
+      }
+
+      /* Collapse/Extend Table Styles */
+      .collapse-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .collapse-table tr.main-row {
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .collapse-table tr.main-row:hover {
+        background-color: #f7fafc;
+      }
+
+      .collapse-table .detail-row {
         display: none;
       }
-      
-      .table-view {
-        display: block;
+
+      .collapse-table .detail-row.expanded {
+        display: table-row;
       }
-    }
-  </style>
-</head>
-<body class="bg-gray-100 flex flex-col min-h-screen">
-  <!-- Header -->
-  <header class="profile-header text-white">
-    <div class="container mx-auto px-4 py-6">
-      <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Profile Dashboard</h1>
-        <button id="logoutButton" class="bg-white text-indigo-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">
-          <i class="fas fa-sign-out-alt mr-2"></i>Logout
-        </button>
-      </div>
-    </div>
-  </header>
 
-  <!-- Main Content -->
-  <main class="flex-grow container mx-auto px-4 py-8 flex flex-col md:flex-row">
-    <!-- Sidebar -->
-    <aside class="w-full md:w-1/4 lg:w-1/5 mb-6 md:mb-0 md:mr-6">
-      <div class="bg-white rounded-xl shadow-sm p-6">
-        <!-- Profile Summary -->
-        <div class="text-center mb-6">
-          <div class="w-24 h-24 rounded-full bg-indigo-100 mx-auto mb-4 flex items-center justify-center">
-            <span class="text-3xl text-indigo-600 font-bold">A</span>
-          </div>
-          <h2 class="text-xl font-bold text-gray-800">Admin User</h2>
-          <p class="text-gray-600">admin@gmail.com</p>
-          <p class="text-sm text-gray-500 mt-2">Joined January 2023</p>
-        </div>
+      .collapse-table .detail-content {
+        padding: 16px;
+        background-color: #f8fafc;
+        border-radius: 0 0 8px 8px;
+      }
 
-        <!-- Navigation -->
-        <nav class="space-y-2">
-          <a href="#" class="nav-item active flex items-center px-4 py-3 rounded-lg" data-section="overview">
-            <i class="fas fa-home mr-3"></i>
-            <span>Overview</span>
-          </a>
-          <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg" data-section="profile">
-            <i class="fas fa-user mr-3"></i>
-            <span>Profile</span>
-          </a>
-          <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg" data-section="settings">
-            <i class="fas fa-cog mr-3"></i>
-            <span>Settings</span>
-          </a>
-          <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg" data-section="activity">
-            <i class="fas fa-chart-line mr-3"></i>
-            <span>Activity</span>
-          </a>
-        </nav>
-      </div>
-    </aside>
+      .collapse-table .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 16px;
+      }
 
-    <!-- Content Area -->
-    <div class="w-full md:w-3/4 lg:w-4/5">
-      <!-- Overview Section -->
-      <section id="overview" class="content-section active">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Dashboard Overview</h2>
-        
-        <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <div class="stats-card bg-white rounded-xl shadow-sm p-6">
-            <div class="flex items-center">
-              <div class="p-3 rounded-lg bg-blue-100 text-blue-600 mr-4">
-                <i class="fas fa-tasks text-xl"></i>
-              </div>
-              <div>
-                <h3 class="text-sm text-gray-500">Projects</h3>
-                <p class="text-2xl font-bold text-gray-800">12</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="stats-card bg-white rounded-xl shadow-sm p-6">
-            <div class="flex items-center">
-              <div class="p-3 rounded-lg bg-green-100 text-green-600 mr-4">
-                <i class="fas fa-check-circle text-xl"></i>
-              </div>
-              <div>
-                <h3 class="text-sm text-gray-500">Completed</h3>
-                <p class="text-2xl font-bold text-gray-800">8</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="stats-card bg-white rounded-xl shadow-sm p-6">
-            <div class="flex items-center">
-              <div class="p-3 rounded-lg bg-purple-100 text-purple-600 mr-4">
-                <i class="fas fa-clock text-xl"></i>
-              </div>
-              <div>
-                <h3 class="text-sm text-gray-500">Pending</h3>
-                <p class="text-2xl font-bold text-gray-800">4</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Recent Activity -->
-        <div class="bg-white rounded-xl shadow-sm p-6">
-          <h3 class="text-lg font-bold text-gray-800 mb-4">Recent Activity</h3>
-          <div class="space-y-4">
-            <div class="flex items-start">
-              <div class="p-2 rounded-lg bg-indigo-100 text-indigo-600 mr-4">
-                <i class="fas fa-file-alt"></i>
-              </div>
-              <div>
-                <h4 class="font-medium text-gray-800">Created new project</h4>
-                <p class="text-sm text-gray-600">You created a new design project</p>
-                <p class="text-xs text-gray-500 mt-1">2 hours ago</p>
-              </div>
-            </div>
-            
-            <div class="flex items-start">
-              <div class="p-2 rounded-lg bg-green-100 text-green-600 mr-4">
-                <i class="fas fa-check-circle"></i>
-              </div>
-              <div>
-                <h4 class="font-medium text-gray-800">Completed task</h4>
-                <p class="text-sm text-gray-600">You completed the dashboard design</p>
-                <p class="text-xs text-gray-500 mt-1">Yesterday</p>
-              </div>
-            </div>
-            
-            <div class="flex items-start">
-              <div class="p-2 rounded-lg bg-blue-100 text-blue-600 mr-4">
-                <i class="fas fa-comment"></i>
-              </div>
-              <div>
-                <h4 class="font-medium text-gray-800">New comment</h4>
-                <p class="text-sm text-gray-600">You commented on the landing page design</p>
-                <p class="text-xs text-gray-500 mt-1">2 days ago</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <!-- Profile Section -->
-      <section id="profile" class="content-section">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Profile Information</h2>
-        
-        <div class="bg-white rounded-xl shadow-sm p-6">
-          <form>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label class="block text-gray-700 text-sm font-medium mb-2" for="firstName">First Name</label>
-                <input type="text" id="firstName" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none" value="Admin">
-              </div>
-              
-              <div>
-                <label class="block text-gray-700 text-sm font-medium mb-2" for="lastName">Last Name</label>
-                <input type="text" id="lastName" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none" value="User">
-              </div>
-            </div>
-            
-            <div class="mb-6">
-              <label class="block text-gray-700 text-sm font-medium mb-2" for="email">Email</label>
-              <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none" value="admin@gmail.com">
-            </div>
-            
-            <div class="mb-6">
-              <label class="block text-gray-700 text-sm font-medium mb-2" for="bio">Bio</label>
-              <textarea id="bio" rows="4" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none">I'm a web developer with passion for creating beautiful and functional user interfaces.</textarea>
-            </div>
-            
-            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition">
-              Update Profile
-            </button>
-          </form>
-        </div>
-      </section>
-      
-      <!-- Settings Section -->
-      <section id="settings" class="content-section">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Account Settings</h2>
-        
-        <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
-          <h3 class="text-lg font-bold text-gray-800 mb-4">Change Password</h3>
-          
-          <form>
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-medium mb-2" for="currentPassword">Current Password</label>
-              <input type="password" id="currentPassword" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none">
-            </div>
-            
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-medium mb-2" for="newPassword">New Password</label>
-              <input type="password" id="newPassword" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none">
-            </div>
-            
-            <div class="mb-6">
-              <label class="block text-gray-700 text-sm font-medium mb-2" for="confirmPassword">Confirm New Password</label>
-              <input type="password" id="confirmPassword" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none">
-            </div>
-            
-            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition">
-              Update Password
-            </button>
-          </form>
-        </div>
-        
-        <div class="bg-white rounded-xl shadow-sm p-6">
-          <h3 class="text-lg font-bold text-gray-800 mb-4">Notification Preferences</h3>
-          
-          <div class="space-y-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <h4 class="font-medium text-gray-800">Email Notifications</h4>
-                <p class="text-sm text-gray-600">Receive emails about your account activity</p>
-              </div>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" class="sr-only peer" checked>
-                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
-              </label>
-            </div>
-            
-            <div class="flex items-center justify-between">
-              <div>
-                <h4 class="font-medium text-gray-800">Security Alerts</h4>
-                <p class="text-sm text-gray-600">Get notified about important security updates</p>
-              </div>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" class="sr-only peer" checked>
-                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
-              </label>
-            </div>
-            
-            <div class="flex items-center justify-between">
-              <div>
-                <h4 class="font-medium text-gray-800">Marketing Emails</h4>
-                <p class="text-sm text-gray-600">Receive updates about new features and products</p>
-              </div>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" class="sr-only peer">
-                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
-              </label>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <!-- Activity Section -->
-      <section id="activity" class="content-section">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Recent Activity</h2>
-        
-        <!-- Toggle View Buttons -->
-        <div class="flex justify-end mb-4">
-          <button id="tableViewBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-l-lg text-sm font-medium">
-            <i class="fas fa-table mr-1"></i> Tabel
-          </button>
-          <button id="cardViewBtn" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-r-lg text-sm font-medium">
-            <i class="fas fa-th-large mr-1"></i> Kartu
+      .collapse-table .detail-item {
+        margin-bottom: 12px;
+      }
+
+      .collapse-table .detail-label {
+        font-weight: 600;
+        color: #4a5568;
+        margin-bottom: 4px;
+        font-size: 14px;
+      }
+
+      .collapse-table .detail-value {
+        color: #2d3748;
+        font-size: 15px;
+      }
+
+      .collapse-table .icon-rotate {
+        transform: rotate(180deg);
+        transition: transform 0.3s ease;
+      }
+
+      /* Remove Details column from main view */
+      .collapse-table thead th:nth-child(4),
+      .collapse-table tbody td:nth-child(4) {
+        display: none;
+      }
+
+      /* Adjust column widths */
+      .collapse-table th:nth-child(1),
+      .collapse-table td:nth-child(1) {
+        width: 15%;
+      }
+
+      .collapse-table th:nth-child(2),
+      .collapse-table td:nth-child(2) {
+        width: 25%;
+      }
+
+      .collapse-table th:nth-child(3),
+      .collapse-table td:nth-child(3) {
+        width: 25%;
+      }
+
+      .collapse-table th:nth-child(5),
+      .collapse-table td:nth-child(5) {
+        width: 10%;
+      }
+
+      .collapse-table th:nth-child(6),
+      .collapse-table td:nth-child(6) {
+        width: 5%;
+      }
+
+      @media (max-width: 768px) {
+        .collapse-table .detail-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="profile-header text-white">
+      <div class="container mx-auto px-4 py-6">
+        <div class="flex justify-between items-center">
+          <h1 class="text-2xl font-bold">Profile Dashboard</h1>
+          <button
+            id="logoutButton"
+            class="bg-white text-indigo-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition"
+          >
+            <i class="fas fa-sign-out-alt mr-2"></i>Logout
           </button>
         </div>
-        
-        <!-- Table View -->
-        <div class="table-view bg-white rounded-xl shadow-sm p-6">
-          <div class="flex justify-between items-center mb-6">
-            <h3 class="text-lg font-bold text-gray-800">Login History</h3>
-            <button class="text-indigo-600 text-sm font-medium">View all</button>
-          </div>
-          
-          <div class="table-container">
-            <table class="responsive-table w-full">
-              <thead>
-                <tr class="text-left text-gray-500 text-sm border-b">
-                  <th class="pb-4 px-4">Date</th>
-                  <th class="pb-4 px-4">Device</th>
-                  <th class="pb-4 px-4">Location</th>
-                  <th class="pb-4 px-4">Details</th>
-                  <th class="pb-4 px-4">Status</th>
-                  <th class="pb-4 px-4">Action</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y">
-                <tr class="hover:bg-gray-50">
-                  <td class="py-3 text-sm px-4">Oct 15, 2023 10:30 AM</td>
-                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Chrome 117.0.5938.92 pada Windows 11 Pro">
-                    Chrome 117.0.5938.92 pada Windows 11 Pro
-                  </td>
-                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Jakarta, Indonesia (IP: 192.168.1.101)">
-                    Jakarta, Indonesia (IP: 192.168.1.101)
-                  </td>
-                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Login dari jaringan kantor, menggunakan authentication two-factor">
-                    Login dari jaringan kantor, menggunakan authentication two-factor
-                  </td>
-                  <td class="py-3 px-4">
-                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Success</span>
-                  </td>
-                  <td class="py-3 px-4">
-                    <button class="text-blue-600 hover:text-blue-800 detail-btn" data-index="0">
-                      <i class="fas fa-info-circle"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="py-3 text-sm px-4">Oct 14, 2023 8:15 PM</td>
-                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Safari 16.6 pada iPhone 13 iOS 16.6">
-                    Safari 16.6 pada iPhone 13 iOS 16.6
-                  </td>
-                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Bandung, Indonesia (IP: 192.168.43.26)">
-                    Bandung, Indonesia (IP: 192.168.43.26)
-                  </td>
-                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Login dari jaringan seluler Telkomsel, menggunakan fingerprint authentication">
-                    Login dari jaringan seluler Telkomsel, menggunakan fingerprint authentication
-                  </td>
-                  <td class="py-3 px-4">
-                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Success</span>
-                  </td>
-                  <td class="py-3 px-4">
-                    <button class="text-blue-600 hover:text-blue-800 detail-btn" data-index="1">
-                      <i class="fas fa-info-circle"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="py-3 text-sm px-4">Oct 12, 2023 3:45 PM</td>
-                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Firefox 118.0.1 pada macOS Ventura 13.5.2">
-                    Firefox 118.0.1 pada macOS Ventura 13.5.2
-                  </td>
-                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Surabaya, Indonesia (IP: 10.25.136.42)">
-                    Surabaya, Indonesia (IP: 10.25.136.42)
-                  </td>
-                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Login dari jaringan wifi kafe, menggunakan password dan kode OTP yang dikirim via email">
-                    Login dari jaringan wifi kafe, menggunakan password dan kode OTP yang dikirim via email
-                  </td>
-                  <td class="py-3 px-4">
-                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Success</span>
-                  </td>
-                  <td class="py-3 px-4">
-                    <button class="text-blue-600 hover:text-blue-800 detail-btn" data-index="2">
-                      <i class="fas fa-info-circle"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="py-3 text-sm px-4">Oct 10, 2023 9:20 AM</td>
-                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21 Android 13">
-                    Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21 Android 13
-                  </td>
-                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Yogyakarta, Indonesia (IP: 172.16.254.12)">
-                    Yogyakarta, Indonesia (IP: 172.16.254.12)
-                  </td>
-                  <td class="py-3 text-sm px-4 truncate-cell has-tooltip" data-tooltip="Percobaan login dengan password yang salah sebanyak 3 kali, akun terkunci sementara selama 15 menit">
-                    Percobaan login dengan password yang salah sebanyak 3 kali, akun terkunci sementara selama 15 menit
-                  </td>
-                  <td class="py-3 px-4">
-                    <span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">Failed</span>
-                  </td>
-                  <td class="py-3 px-4">
-                    <button class="text-blue-600 hover:text-blue-800 detail-btn" data-index="3">
-                      <i class="fas fa-info-circle"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        
-        <!-- Card View -->
-        <div class="card-view bg-white rounded-xl shadow-sm p-6">
-          <div class="flex justify-between items-center mb-6">
-            <h3 class="text-lg font-bold text-gray-800">Login History</h3>
-            <button class="text-indigo-600 text-sm font-medium">View all</button>
-          </div>
-          
-          <div class="grid grid-cols-1 gap-4">
-            <!-- Card 1 -->
-            <div class="border rounded-lg p-4">
-              <div class="flex justify-between items-start">
-                <div>
-                  <h3 class="font-semibold text-gray-800">15 Okt 2023, 10:30:45 WIB</h3>
-                  <p class="text-sm text-gray-600 mt-1">Chrome 117.0.5938.92 pada Windows 11 Pro</p>
-                </div>
-                <span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full">Berhasil</span>
-              </div>
-              <div class="mt-3 text-sm">
-                <p class="text-gray-700"><span class="font-medium">Lokasi:</span> Jakarta, Indonesia (IP: 192.168.1.101)</p>
-                <p class="text-gray-700 mt-1"><span class="font-medium">Detail:</span> Login dari jaringan kantor, menggunakan authentication two-factor</p>
-              </div>
-              <div class="mt-3 flex justify-end">
-                <button class="text-blue-600 text-sm detail-btn" data-index="0">
-                  <i class="fas fa-info-circle mr-1"></i> Detail Lengkap
-                </button>
-              </div>
-            </div>
-            
-            <!-- Card 2 -->
-            <div class="border rounded-lg p-4">
-              <div class="flex justify-between items-start">
-                <div>
-                  <h3 class="font-semibold text-gray-800">14 Okt 2023, 20:15:32 WIB</h3>
-                  <p class="text-sm text-gray-600 mt-1">Safari 16.6 pada iPhone 13 iOS 16.6</p>
-                </div>
-                <span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full">Berhasil</span>
-              </div>
-              <div class="mt-3 text-sm">
-                <p class="text-gray-700"><span class="font-medium">Lokasi:</span> Bandung, Indonesia (IP: 192.168.43.26)</p>
-                <p class="text-gray-700 mt-1"><span class="font-medium">Detail:</span> Login dari jaringan seluler Telkomsel, menggunakan fingerprint authentication</p>
-              </div>
-              <div class="mt-3 flex justify-end">
-                <button class="text-blue-600 text-sm detail-btn" data-index="1">
-                  <i class="fas fa-info-circle mr-1"></i> Detail Lengkap
-                </button>
-              </div>
-            </div>
-            
-            <!-- Card 3 -->
-            <div class="border rounded-lg p-4">
-              <div class="flex justify-between items-start">
-                <div>
-                  <h3 class="font-semibold text-gray-800">12 Okt 2023, 15:45:21 WIB</h3>
-                  <p class="text-sm text-gray-600 mt-1">Firefox 118.0.1 pada macOS Ventura 13.5.2</p>
-                </div>
-                <span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full">Berhasil</span>
-              </div>
-              <div class="mt-3 text-sm">
-                <p class="text-gray-700"><span class="font-medium">Lokasi:</span> Surabaya, Indonesia (IP: 10.25.136.42)</p>
-                <p class="text-gray-700 mt-1"><span class="font-medium">Detail:</span> Login dari jaringan wifi kafe, menggunakan password dan kode OTP</p>
-              </div>
-              <div class="mt-3 flex justify-end">
-                <button class="text-blue-600 text-sm detail-btn" data-index="2">
-                  <i class="fas fa-info-circle mr-1"></i> Detail Lengkap
-                </button>
-              </div>
-            </div>
-            
-            <!-- Card 4 -->
-            <div class="border rounded-lg p-4">
-              <div class="flex justify-between items-start">
-                <div>
-                  <h3 class="font-semibold text-gray-800">10 Okt 2023, 09:20:15 WIB</h3>
-                  <p class="text-sm text-gray-600 mt-1">Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21</p>
-                </div>
-                <span class="px-3 py-1 bg-red-100 text-red-700 text-xs rounded-full">Gagal</span>
-              </div>
-              <div class="mt-3 text-sm">
-                <p class="text-gray-700"><span class="font-medium">Lokasi:</span> Yogyakarta, Indonesia (IP: 172.16.254.12)</p>
-                <p class="text-gray-700 mt-1"><span class="font-medium">Detail:</span> Percobaan login dengan password yang salah sebanyak 3 kali</p>
-              </div>
-              <div class="mt-3 flex justify-end">
-                <button class="text-blue-600 text-sm detail-btn" data-index="3">
-                  <i class="fas fa-info-circle mr-1"></i> Detail Lengkap
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-white border-t py-6">
-    <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
-      <p>© 2023 Profile Dashboard. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- Modal untuk Detail -->
-  <div id="detailModal" class="modal">
-    <div class="modal-content">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-semibold text-gray-800">Detail Login</h3>
-        <button id="closeModal" class="text-gray-500 hover:text-gray-700">
-          <i class="fas fa-times"></i>
-        </button>
       </div>
-      <div id="modalContent" class="space-y-4">
-        <!-- Konten akan diisi oleh JavaScript -->
+    </header>
+
+    <!-- Main Content -->
+    <main
+      class="flex-grow container mx-auto px-4 py-8 flex flex-col md:flex-row"
+    >
+      <!-- Sidebar -->
+      <aside class="w-full md:w-1/4 lg:w-1/5 mb-6 md:mb-0 md:mr-6">
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <!-- Profile Summary -->
+          <div class="text-center mb-6">
+            <div
+              class="w-24 h-24 rounded-full bg-indigo-100 mx-auto mb-4 flex items-center justify-center"
+            >
+              <span class="text-3xl text-indigo-600 font-bold">A</span>
+            </div>
+            <h2 class="text-xl font-bold text-gray-800">Admin User</h2>
+            <p class="text-gray-600">admin@gmail.com</p>
+            <p class="text-sm text-gray-500 mt-2">Joined January 2023</p>
+          </div>
+
+          <!-- Navigation -->
+          <nav class="space-y-2">
+            <a
+              href="#"
+              class="nav-item active flex items-center px-4 py-3 rounded-lg"
+              data-section="overview"
+            >
+              <i class="fas fa-home mr-3"></i>
+              <span>Overview</span>
+            </a>
+            <a
+              href="#"
+              class="nav-item flex items-center px-4 py-3 rounded-lg"
+              data-section="profile"
+            >
+              <i class="fas fa-user mr-3"></i>
+              <span>Profile</span>
+            </a>
+            <a
+              href="#"
+              class="nav-item flex items-center px-4 py-3 rounded-lg"
+              data-section="activity"
+            >
+              <i class="fas fa-chart-line mr-3"></i>
+              <span>Activity</span>
+            </a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Content Area -->
+      <div class="w-full md:w-3/4 lg:w-4/5">
+        <!-- Overview Section -->
+        <section id="overview" class="content-section active">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">
+            Dashboard Overview
+          </h2>
+
+          <!-- Stats Cards -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+          >
+            <div class="stats-card bg-white rounded-xl shadow-sm p-6">
+              <div class="flex items-center">
+                <div class="p-3 rounded-lg bg-blue-100 text-blue-600 mr-4">
+                  <i class="fas fa-tasks text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm text-gray-500">Projects</h3>
+                  <p class="text-2xl font-bold text-gray-800">12</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stats-card bg-white rounded-xl shadow-sm p-6">
+              <div class="flex items-center">
+                <div class="p-3 rounded-lg bg-green-100 text-green-600 mr-4">
+                  <i class="fas fa-check-circle text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm text-gray-500">Completed</h3>
+                  <p class="text-2xl font-bold text-gray-800">8</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stats-card bg-white rounded-xl shadow-sm p-6">
+              <div class="flex items-center">
+                <div class="p-3 rounded-lg bg-purple-100 text-purple-600 mr-4">
+                  <i class="fas fa-clock text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm text-gray-500">Pending</h3>
+                  <p class="text-2xl font-bold text-gray-800">4</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">
+              Recent Activity
+            </h3>
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <div class="p-2 rounded-lg bg-indigo-100 text-indigo-600 mr-4">
+                  <i class="fas fa-file-alt"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-800">Created new project</h4>
+                  <p class="text-sm text-gray-600">
+                    You created a new design project
+                  </p>
+                  <p class="text-xs text-gray-500 mt-1">2 hours ago</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="p-2 rounded-lg bg-green-100 text-green-600 mr-4">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-800">Completed task</h4>
+                  <p class="text-sm text-gray-600">
+                    You completed the dashboard design
+                  </p>
+                  <p class="text-xs text-gray-500 mt-1">Yesterday</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="p-2 rounded-lg bg-blue-100 text-blue-600 mr-4">
+                  <i class="fas fa-comment"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-800">New comment</h4>
+                  <p class="text-sm text-gray-600">
+                    You commented on the landing page design
+                  </p>
+                  <p class="text-xs text-gray-500 mt-1">2 days ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="content-section">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">
+            Profile Information
+          </h2>
+
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <form>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label
+                    class="block text-gray-700 text-sm font-medium mb-2"
+                    for="firstName"
+                    >First Name</label
+                  >
+                  <input
+                    type="text"
+                    id="firstName"
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+                    value="Admin"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    class="block text-gray-700 text-sm font-medium mb-2"
+                    for="lastName"
+                    >Last Name</label
+                  >
+                  <input
+                    type="text"
+                    id="lastName"
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+                    value="User"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-6">
+                <label
+                  class="block text-gray-700 text-sm font-medium mb-2"
+                  for="email"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+                  value="admin@gmail.com"
+                />
+              </div>
+
+              <div class="mb-6">
+                <label
+                  class="block text-gray-700 text-sm font-medium mb-2"
+                  for="bio"
+                  >Bio</label
+                >
+                <textarea
+                  id="bio"
+                  rows="4"
+                  class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+                >
+I'm a web developer with passion for creating beautiful and functional user interfaces.</textarea
+                >
+              </div>
+
+              <button
+                type="submit"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition"
+              >
+                Update Profile
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- Activity Section -->
+        <section id="activity" class="content-section">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">Recent Activity</h2>
+
+          <!-- Toggle View Buttons -->
+          <div class="flex justify-end mb-4">
+            <button
+              id="tableViewBtn"
+              class="bg-indigo-600 text-white px-4 py-2 rounded-l-lg text-sm font-medium"
+            >
+              <i class="fas fa-table mr-1"></i> Tabel
+            </button>
+            <button
+              id="cardViewBtn"
+              class="bg-gray-200 text-gray-700 px-4 py-2 rounded-r-lg text-sm font-medium"
+            >
+              <i class="fas fa-th-large mr-1"></i> Kartu
+            </button>
+          </div>
+
+          <!-- Table View -->
+          <div class="table-view bg-white rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-lg font-bold text-gray-800">Login History</h3>
+            </div>
+
+            <div class="table-container">
+              <table class="collapse-table w-full">
+                <thead>
+                  <tr class="text-left text-gray-500 text-sm border-b">
+                    <th class="pb-4 px-4">Date</th>
+                    <th class="pb-4 px-4">Device</th>
+                    <th class="pb-4 px-4">Location</th>
+                    <th class="pb-4 px-4">Status</th>
+                    <th class="pb-4 px-4">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y">
+                  <!-- Baris 1 -->
+                  <tr
+                    class="main-row hover:bg-gray-50"
+                    onclick="toggleRow(this)"
+                  >
+                    <td class="py-3 text-sm px-4">Oct 15, 2023 10:30 AM</td>
+                    <td
+                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
+                      data-tooltip="Chrome 117.0.5938.92 pada Windows 11 Pro"
+                    >
+                      Chrome 117.0.5938.92 pada Windows 11 Pro
+                    </td>
+                    <td
+                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
+                      data-tooltip="Jakarta, Indonesia (IP: 192.168.1.101)"
+                    >
+                      Jakarta, Indonesia (IP: 192.168.1.101)
+                    </td>
+                    <td class="py-3 px-4">
+                      <span
+                        class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+                        >Success</span
+                      >
+                    </td>
+                    <td class="py-3 px-4">
+                      <button class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-chevron-down"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="detail-row">
+                    <td colspan="5">
+                      <div class="detail-content">
+                        <div class="detail-grid">
+                          <div class="detail-item">
+                            <div class="detail-label">Details</div>
+                            <div class="detail-value">
+                              Login dari jaringan kantor, menggunakan
+                              authentication two-factor
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Additional Info</div>
+                            <div class="detail-value">
+                              Login ini dilakukan dari jaringan internal
+                              perusahaan yang terjamin keamanannya.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Baris 2 -->
+                  <tr
+                    class="main-row hover:bg-gray-50"
+                    onclick="toggleRow(this)"
+                  >
+                    <td class="py-3 text-sm px-4">Oct 14, 2023 8:15 PM</td>
+                    <td
+                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
+                      data-tooltip="Safari 16.6 pada iPhone 13 iOS 16.6"
+                    >
+                      Safari 16.6 pada iPhone 13 iOS 16.6
+                    </td>
+                    <td
+                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
+                      data-tooltip="Bandung, Indonesia (IP: 192.168.43.26)"
+                    >
+                      Bandung, Indonesia (IP: 192.168.43.26)
+                    </td>
+                    <td class="py-3 px-4">
+                      <span
+                        class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+                        >Success</span
+                      >
+                    </td>
+                    <td class="py-3 px-4">
+                      <button class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-chevron-down"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="detail-row">
+                    <td colspan="5">
+                      <div class="detail-content">
+                        <div class="detail-grid">
+                          <div class="detail-item">
+                            <div class="detail-label">Details</div>
+                            <div class="detail-value">
+                              Login dari jaringan seluler Telkomsel, menggunakan
+                              fingerprint authentication
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Additional Info</div>
+                            <div class="detail-value">
+                              Perangkat ini telah terdaftar sebagai perangkat
+                              terpercaya.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Baris 3 -->
+                  <tr
+                    class="main-row hover:bg-gray-50"
+                    onclick="toggleRow(this)"
+                  >
+                    <td class="py-3 text-sm px-4">Oct 12, 2023 3:45 PM</td>
+                    <td
+                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
+                      data-tooltip="Firefox 118.0.1 pada macOS Ventura 13.5.2"
+                    >
+                      Firefox 118.0.1 pada macOS Ventura 13.5.2
+                    </td>
+                    <td
+                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
+                      data-tooltip="Surabaya, Indonesia (IP: 10.25.136.42)"
+                    >
+                      Surabaya, Indonesia (IP: 10.25.136.42)
+                    </td>
+                    <td class="py-3 px-4">
+                      <span
+                        class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+                        >Success</span
+                      >
+                    </td>
+                    <td class="py-3 px-4">
+                      <button class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-chevron-down"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="detail-row">
+                    <td colspan="5">
+                      <div class="detail-content">
+                        <div class="detail-grid">
+                          <div class="detail-item">
+                            <div class="detail-label">Details</div>
+                            <div class="detail-value">
+                              Login dari jaringan wifi kafe, menggunakan
+                              password dan kode OTP yang dikirim via email
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Additional Info</div>
+                            <div class="detail-value">
+                              Login dari jaringan publik sehingga memerlukan
+                              verifikasi tambahan.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Baris 4 -->
+                  <tr
+                    class="main-row hover:bg-gray-50"
+                    onclick="toggleRow(this)"
+                  >
+                    <td class="py-3 text-sm px-4">Oct 10, 2023 9:20 AM</td>
+                    <td
+                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
+                      data-tooltip="Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21 Android 13"
+                    >
+                      Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21
+                      Android 13
+                    </td>
+                    <td
+                      class="py-3 text-sm px-4 truncate-cell has-tooltip"
+                      data-tooltip="Yogyakarta, Indonesia (IP: 172.16.254.12)"
+                    >
+                      Yogyakarta, Indonesia (IP: 172.16.254.12)
+                    </td>
+                    <td class="py-3 px-4">
+                      <span
+                        class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full"
+                        >Failed</span
+                      >
+                    </td>
+                    <td class="py-3 px-4">
+                      <button class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-chevron-down"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="detail-row">
+                    <td colspan="5">
+                      <div class="detail-content">
+                        <div class="detail-grid">
+                          <div class="detail-item">
+                            <div class="detail-label">Details</div>
+                            <div class="detail-value">
+                              Percobaan login dengan password yang salah
+                              sebanyak 3 kali, akun terkunci sementara selama 15
+                              menit
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Additional Info</div>
+                            <div class="detail-value">
+                              Setelah periode terkunci, pengguna berhasil login
+                              dengan reset password.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Card View -->
+          <div class="card-view bg-white rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-lg font-bold text-gray-800">Login History</h3>
+              <!-- <button class="text-indigo-600 text-sm font-medium">
+                View all
+              </button> -->
+            </div>
+
+            <div class="grid grid-cols-1 gap-4">
+              <!-- Card 1 -->
+              <div class="border rounded-lg p-4">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="font-semibold text-gray-800">
+                      15 Okt 2023, 10:30:45 WIB
+                    </h3>
+                    <p class="text-sm text-gray-600 mt-1">
+                      Chrome 117.0.5938.92 pada Windows 11 Pro
+                    </p>
+                  </div>
+                  <span
+                    class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+                    >Berhasil</span
+                  >
+                </div>
+                <div class="mt-3 text-sm">
+                  <p class="text-gray-700">
+                    <span class="font-medium">Lokasi:</span> Jakarta, Indonesia
+                    (IP: 192.168.1.101)
+                  </p>
+                  <p class="text-gray-700 mt-1">
+                    <span class="font-medium">Detail:</span> Login dari jaringan
+                    kantor, menggunakan authentication two-factor
+                  </p>
+                </div>
+                <div class="mt-3 flex justify-end">
+                  <button
+                    class="text-blue-600 text-sm detail-btn"
+                    data-index="0"
+                  >
+                    <i class="fas fa-info-circle mr-1"></i> Detail Lengkap
+                  </button>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="border rounded-lg p-4">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="font-semibold text-gray-800">
+                      14 Okt 2023, 20:15:32 WIB
+                    </h3>
+                    <p class="text-sm text-gray-600 mt-1">
+                      Safari 16.6 pada iPhone 13 iOS 16.6
+                    </p>
+                  </div>
+                  <span
+                    class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+                    >Berhasil</span
+                  >
+                </div>
+                <div class="mt-3 text-sm">
+                  <p class="text-gray-700">
+                    <span class="font-medium">Lokasi:</span> Bandung, Indonesia
+                    (IP: 192.168.43.26)
+                  </p>
+                  <p class="text-gray-700 mt-1">
+                    <span class="font-medium">Detail:</span> Login dari jaringan
+                    seluler Telkomsel, menggunakan fingerprint authentication
+                  </p>
+                </div>
+                <div class="mt-3 flex justify-end">
+                  <button
+                    class="text-blue-600 text-sm detail-btn"
+                    data-index="1"
+                  >
+                    <i class="fas fa-info-circle mr-1"></i> Detail Lengkap
+                  </button>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="border rounded-lg p-4">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="font-semibold text-gray-800">
+                      12 Okt 2023, 15:45:21 WIB
+                    </h3>
+                    <p class="text-sm text-gray-600 mt-1">
+                      Firefox 118.0.1 pada macOS Ventura 13.5.2
+                    </p>
+                  </div>
+                  <span
+                    class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+                    >Berhasil</span
+                  >
+                </div>
+                <div class="mt-3 text-sm">
+                  <p class="text-gray-700">
+                    <span class="font-medium">Lokasi:</span> Surabaya, Indonesia
+                    (IP: 10.25.136.42)
+                  </p>
+                  <p class="text-gray-700 mt-1">
+                    <span class="font-medium">Detail:</span> Login dari jaringan
+                    wifi kafe, menggunakan password dan kode OTP
+                  </p>
+                </div>
+                <div class="mt-3 flex justify-end">
+                  <button
+                    class="text-blue-600 text-sm detail-btn"
+                    data-index="2"
+                  >
+                    <i class="fas fa-info-circle mr-1"></i> Detail Lengkap
+                  </button>
+                </div>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="border rounded-lg p-4">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="font-semibold text-gray-800">
+                      10 Okt 2023, 09:20:15 WIB
+                    </h3>
+                    <p class="text-sm text-gray-600 mt-1">
+                      Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21
+                    </p>
+                  </div>
+                  <span
+                    class="px-3 py-1 bg-red-100 text-red-700 text-xs rounded-full"
+                    >Gagal</span
+                  >
+                </div>
+                <div class="mt-3 text-sm">
+                  <p class="text-gray-700">
+                    <span class="font-medium">Lokasi:</span> Yogyakarta,
+                    Indonesia (IP: 172.16.254.12)
+                  </p>
+                  <p class="text-gray-700 mt-1">
+                    <span class="font-medium">Detail:</span> Percobaan login
+                    dengan password yang salah sebanyak 3 kali
+                  </p>
+                </div>
+                <div class="mt-3 flex justify-end">
+                  <button
+                    class="text-blue-600 text-sm detail-btn"
+                    data-index="3"
+                  >
+                    <i class="fas fa-info-circle mr-1"></i> Detail Lengkap
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t py-6">
+      <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+        <p>© 2023 Profile Dashboard. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Modal untuk Detail -->
+    <div id="detailModal" class="modal">
+      <div class="modal-content">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold text-gray-800">Detail Login</h3>
+          <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="modalContent" class="space-y-4">
+          <!-- Konten akan diisi oleh JavaScript -->
+        </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    // Data lengkap untuk modal
-    const loginData = [
-      {
-        date: "15 Oktober 2023, 10:30:45 WIB",
-        device: "Chrome 117.0.5938.92 pada Windows 11 Pro",
-        location: "Jakarta, Indonesia (IP: 192.168.1.101)",
-        details: "Login dari jaringan kantor, menggunakan authentication two-factor. Login ini dilakukan dari jaringan internal perusahaan yang terjamin keamanannya.",
-        status: "Berhasil",
-        statusClass: "bg-green-100 text-green-700"
-      },
-      {
-        date: "14 Oktober 2023, 20:15:32 WIB",
-        device: "Safari 16.6 pada iPhone 13 iOS 16.6",
-        location: "Bandung, Indonesia (IP: 192.168.43.26)",
-        details: "Login dari jaringan seluler Telkomsel, menggunakan fingerprint authentication. Perangkat ini telah terdaftar sebagai perangkat terpercaya.",
-        status: "Berhasil",
-        statusClass: "bg-green-100 text-green-700"
-      },
-      {
-        date: "12 Oktober 2023, 15:45:21 WIB",
-        device: "Firefox 118.0.1 pada macOS Ventura 13.5.2",
-        location: "Surabaya, Indonesia (IP: 10.25.136.42)",
-        details: "Login dari jaringan wifi kafe, menggunakan password dan kode OTP yang dikirim via email. Login dari jaringan publik sehingga memerlukan verifikasi tambahan.",
-        status: "Berhasil",
-        statusClass: "bg-green-100 text-green-700"
-      },
-      {
-        date: "10 Oktober 2023, 09:20:15 WIB",
-        device: "Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21 Android 13",
-        location: "Yogyakarta, Indonesia (IP: 172.16.254.12)",
-        details: "Percobaan login dengan password yang salah sebanyak 3 kali, akun terkunci sementara selama 15 menit. Setelah periode terkunci, pengguna berhasil login dengan reset password.",
-        status: "Gagal",
-        statusClass: "bg-red-100 text-red-700"
-      }
-    ];
+    <script>
+      // Data lengkap untuk modal
+      const loginData = [
+        {
+          date: "15 Oktober 2023, 10:30:45 WIB",
+          device: "Chrome 117.0.5938.92 pada Windows 11 Pro",
+          location: "Jakarta, Indonesia (IP: 192.168.1.101)",
+          details:
+            "Login dari jaringan kantor, menggunakan authentication two-factor. Login ini dilakukan dari jaringan internal perusahaan yang terjamin keamanannya.",
+          status: "Berhasil",
+          statusClass: "bg-green-100 text-green-700",
+        },
+        {
+          date: "14 Oktober 2023, 20:15:32 WIB",
+          device: "Safari 16.6 pada iPhone 13 iOS 16.6",
+          location: "Bandung, Indonesia (IP: 192.168.43.26)",
+          details:
+            "Login dari jaringan seluler Telkomsel, menggunakan fingerprint authentication. Perangkat ini telah terdaftar sebagai perangkat terpercaya.",
+          status: "Berhasil",
+          statusClass: "bg-green-100 text-green-700",
+        },
+        {
+          date: "12 Oktober 2023, 15:45:21 WIB",
+          device: "Firefox 118.0.1 pada macOS Ventura 13.5.2",
+          location: "Surabaya, Indonesia (IP: 10.25.136.42)",
+          details:
+            "Login dari jaringan wifi kafe, menggunakan password dan kode OTP yang dikirim via email. Login dari jaringan publik sehingga memerlukan verifikasi tambahan.",
+          status: "Berhasil",
+          statusClass: "bg-green-100 text-green-700",
+        },
+        {
+          date: "10 Oktober 2023, 09:20:15 WIB",
+          device:
+            "Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21 Android 13",
+          location: "Yogyakarta, Indonesia (IP: 172.16.254.12)",
+          details:
+            "Percobaan login dengan password yang salah sebanyak 3 kali, akun terkunci sementara selama 15 menit. Setelah periode terkunci, pengguna berhasil login dengan reset password.",
+          status: "Gagal",
+          statusClass: "bg-red-100 text-red-700",
+        },
+      ];
 
-    // Navigation functionality
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Remove active class from all items
-        document.querySelectorAll('.nav-item').forEach(navItem => {
-          navItem.classList.remove('active');
+      // Navigation functionality
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        item.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          // Remove active class from all items
+          document.querySelectorAll(".nav-item").forEach((navItem) => {
+            navItem.classList.remove("active");
+          });
+
+          // Add active class to clicked item
+          this.classList.add("active");
+
+          // Hide all content sections
+          document.querySelectorAll(".content-section").forEach((section) => {
+            section.classList.remove("active");
+          });
+
+          // Show the selected content section
+          const sectionId = this.getAttribute("data-section");
+          document.getElementById(sectionId).classList.add("active");
         });
-        
-        // Add active class to clicked item
-        this.classList.add('active');
-        
-        // Hide all content sections
-        document.querySelectorAll('.content-section').forEach(section => {
-          section.classList.remove('active');
-        });
-        
-        // Show the selected content section
-        const sectionId = this.getAttribute('data-section');
-        document.getElementById(sectionId).classList.add('active');
       });
-    });
-    
-    // Logout functionality
-    document.getElementById('logoutButton').addEventListener('click', function() {
-      if (confirm('Are you sure you want to logout?')) {
-        window.location.href = 'index.html'; // Redirect to login page
-      }
-    });
-    
-    // Toggle view functionality
-    document.getElementById('tableViewBtn').addEventListener('click', function() {
-      document.getElementById('tableViewBtn').classList.add('bg-indigo-600', 'text-white');
-      document.getElementById('tableViewBtn').classList.remove('bg-gray-200', 'text-gray-700');
-      document.getElementById('cardViewBtn').classList.add('bg-gray-200', 'text-gray-700');
-      document.getElementById('cardViewBtn').classList.remove('bg-indigo-600', 'text-white');
-      document.querySelector('.table-view').style.display = 'block';
-      document.querySelector('.card-view').style.display = 'none';
-    });
 
-    document.getElementById('cardViewBtn').addEventListener('click', function() {
-      document.getElementById('cardViewBtn').classList.add('bg-indigo-600', 'text-white');
-      document.getElementById('cardViewBtn').classList.remove('bg-gray-200', 'text-gray-700');
-      document.getElementById('tableViewBtn').classList.add('bg-gray-200', 'text-gray-700');
-      document.getElementById('tableViewBtn').classList.remove('bg-indigo-600', 'text-white');
-      document.querySelector('.card-view').style.display = 'block';
-      document.querySelector('.table-view').style.display = 'none';
-    });
-    
-    // Modal functionality
-    const modal = document.getElementById('detailModal');
-    const modalContent = document.getElementById('modalContent');
-    
-    document.querySelectorAll('.detail-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const index = parseInt(this.getAttribute('data-index'));
-        const data = loginData[index];
-        
-        modalContent.innerHTML = `
+      // Logout functionality
+      document
+        .getElementById("logoutButton")
+        .addEventListener("click", function () {
+          if (confirm("Are you sure you want to logout?")) {
+            window.location.href = "index.html"; // Redirect to login page
+          }
+        });
+
+      // Toggle view functionality
+      document
+        .getElementById("tableViewBtn")
+        .addEventListener("click", function () {
+          document
+            .getElementById("tableViewBtn")
+            .classList.add("bg-indigo-600", "text-white");
+          document
+            .getElementById("tableViewBtn")
+            .classList.remove("bg-gray-200", "text-gray-700");
+          document
+            .getElementById("cardViewBtn")
+            .classList.add("bg-gray-200", "text-gray-700");
+          document
+            .getElementById("cardViewBtn")
+            .classList.remove("bg-indigo-600", "text-white");
+          document.querySelector(".table-view").style.display = "block";
+          document.querySelector(".card-view").style.display = "none";
+        });
+
+      document
+        .getElementById("cardViewBtn")
+        .addEventListener("click", function () {
+          document
+            .getElementById("cardViewBtn")
+            .classList.add("bg-indigo-600", "text-white");
+          document
+            .getElementById("cardViewBtn")
+            .classList.remove("bg-gray-200", "text-gray-700");
+          document
+            .getElementById("tableViewBtn")
+            .classList.add("bg-gray-200", "text-gray-700");
+          document
+            .getElementById("tableViewBtn")
+            .classList.remove("bg-indigo-600", "text-white");
+          document.querySelector(".card-view").style.display = "block";
+          document.querySelector(".table-view").style.display = "none";
+        });
+
+      // Modal functionality
+      const modal = document.getElementById("detailModal");
+      const modalContent = document.getElementById("modalContent");
+
+      document.querySelectorAll(".detail-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const index = parseInt(this.getAttribute("data-index"));
+          const data = loginData[index];
+
+          modalContent.innerHTML = `
           <div>
             <p class="text-sm text-gray-600">Tanggal & Waktu</p>
             <p class="font-medium">${data.date}</p>
@@ -731,20 +1064,76 @@
             <span class="px-3 py-1 ${data.statusClass} text-xs rounded-full">${data.status}</span>
           </div>
         `;
-        
-        modal.style.display = 'flex';
+
+          modal.style.display = "flex";
+        });
       });
-    });
+
+      document
+        .getElementById("closeModal")
+        .addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+      window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+
+      // Function untuk toggle row collapse/expand
+  function toggleRow(row) {
+    // Dapatkan baris detail berikutnya
+    const detailRow = row.nextElementSibling;
     
-    document.getElementById('closeModal').addEventListener('click', function() {
-      modal.style.display = 'none';
-    });
+    // Toggle class expanded pada baris detail
+    detailRow.classList.toggle('expanded');
     
-    window.addEventListener('click', function(event) {
-      if (event.target === modal) {
-        modal.style.display = 'none';
+    // Dapatkan ikon pada baris ini
+    const icon = row.querySelector('i');
+    
+    // Toggle ikon antara chevron down dan up
+    if (detailRow.classList.contains('expanded')) {
+      icon.classList.add('fa-chevron-up');
+      icon.classList.remove('fa-chevron-down');
+    } else {
+      icon.classList.add('fa-chevron-down');
+      icon.classList.remove('fa-chevron-up');
+    }
+    
+    // Tutup baris detail lainnya yang terbuka
+    document.querySelectorAll('.detail-row').forEach(otherRow => {
+      if (otherRow !== detailRow && otherRow.classList.contains('expanded')) {
+        otherRow.classList.remove('expanded');
+        const otherIcon = otherRow.previousElementSibling.querySelector('i');
+        otherIcon.classList.add('fa-chevron-down');
+        otherIcon.classList.remove('fa-chevron-up');
       }
     });
-  </script>
-</body>
+  }
+
+  // Hapus onclick dari HTML dan tambahkan event listener yang benar
+  document.querySelectorAll('.main-row').forEach(row => {
+    // Hapus atribut onclick dari HTML
+    row.removeAttribute('onclick');
+    
+    // Tambahkan event listener yang benar
+    row.addEventListener('click', function(e) {
+      // Pastikan yang diklik bukan elemen lain di dalam row
+      if (e.target.tagName !== 'BUTTON' && !e.target.closest('button')) {
+        toggleRow(this);
+      }
+    });
+  });
+
+  // Event listener untuk tombol panah khusus
+  document.querySelectorAll('.main-row button').forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.stopPropagation(); // Mencegah event bubbling ke row
+      const row = this.closest('.main-row');
+      toggleRow(row);
+    });
+  });
+    </script>
+  </body>
 </html>
