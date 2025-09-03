@@ -34,7 +34,7 @@
           transform: translateX(10px);
         }
       }
-      
+
       /* CSS untuk input error dan success */
       .input-error {
         border-color: #ff3860 !important;
@@ -133,7 +133,9 @@
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-600">
             Don't have an account?
-            <a href="signUp.html" class="text-blue-500 hover:text-blue-700 font-medium"
+            <a
+              href="signUp.html"
+              class="text-blue-500 hover:text-blue-700 font-medium"
               >Sign up</a
             >
           </p>
@@ -171,7 +173,7 @@
           passwordError.classList.remove("show");
           emailInput.classList.remove("input-error", "input-success");
           passwordInput.classList.remove("input-error", "input-success");
-          
+
           // Hapus class shake sebelum validasi dimulai
           loginForm.classList.remove("shake");
 
@@ -193,7 +195,11 @@
             showError(passwordError, "Harap isi password", passwordInput);
             isValid = false;
           } else if (password.length < 4) {
-            showError(passwordError, "Setidaknya masukkan 4 karakter", passwordInput);
+            showError(
+              passwordError,
+              "Setidaknya masukkan 4 karakter",
+              passwordInput
+            );
             isValid = false;
           } else {
             hideError(passwordError, passwordInput);
@@ -205,27 +211,30 @@
             return;
           }
 
-          // Check credentials (dummy validation)
-          if (email === "admin@gmail.com" && password === "1234") {
-            // Show success message
+          const users = JSON.parse(localStorage.getItem("users")) || [];
+
+          // cari user yang sesuai
+          const foundUser = users.find(
+            (u) => u.email === email && u.password === password
+          );
+
+          if (foundUser) {
+            // login sukses
             successMessage.classList.remove("hidden");
 
-            // Change button to loading state
             const loginButton = document.getElementById("loginButton");
             loginButton.innerHTML =
               '<i class="fa fa-spinner fa-spin mr-2"></i> Signing In...';
             loginButton.disabled = true;
 
-            // Simulate redirect after 2 seconds
+            // simpan user yang sedang login
+            localStorage.setItem("currentUser", JSON.stringify(foundUser));
+
             setTimeout(() => {
-              window.location.href = "profile.html"; // redirect to profile page
+              window.location.href = "profile.html";
             }, 2000);
           } else {
-            // Show general error dan set input ke error state
             showError(passwordError, "Email & Password salah", passwordInput);
-            // showError(emailError, "Email & Password salah", emailInput);
-            
-            // Trigger shake animation untuk login gagal
             triggerShakeAnimation();
           }
         });
@@ -233,7 +242,7 @@
       function showError(element, message, inputElement = null) {
         element.querySelector("span").textContent = message;
         element.classList.add("show");
-        
+
         // Tambahkan class error ke input jika diberikan
         if (inputElement) {
           inputElement.classList.add("input-error");
@@ -243,7 +252,7 @@
 
       function hideError(element, inputElement = null) {
         element.classList.remove("show");
-        
+
         // Hapus class error dan tambahkan success ke input jika diberikan
         if (inputElement) {
           inputElement.classList.remove("input-error");
@@ -260,13 +269,13 @@
       function triggerShakeAnimation() {
         // Hapus class shake terlebih dahulu
         loginForm.classList.remove("shake");
-        
+
         // Trigger reflow untuk mereset animation
         void loginForm.offsetWidth;
-        
+
         // Tambahkan class shake kembali
         loginForm.classList.add("shake");
-        
+
         // Hapus class shake setelah animation selesai
         setTimeout(() => {
           loginForm.classList.remove("shake");

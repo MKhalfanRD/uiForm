@@ -1,161 +1,469 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign Up Form</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <style>
-    .error-message { opacity: 0; transform: translateY(-10px); transition: all 0.3s ease; }
-    .error-message.show { opacity: 1; transform: translateY(0); }
-    .input-error { border-color: #ff3860 !important; background-color: #fff5f5 !important; box-shadow: 0 0 0 3px rgba(255,56,96,0.1) !important; }
-    .input-success { border-color: #48bb78 !important; background-color: #f0fff4 !important; box-shadow: 0 0 0 3px rgba(72,187,120,0.1) !important; }
-  </style>
-</head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center min-h-screen p-4">
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up Form with Validation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      .error-message {
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+      }
+      .error-message.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .shake {
+        animation: shake 0.5s ease-in-out;
+      }
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px);
+        }
+        75% {
+          transform: translateX(10px);
+        }
+      }
+      
+      /* CSS untuk input error dan success */
+      .input-error {
+        border-color: #ff3860 !important;
+        background-color: #fff5f5 !important;
+        box-shadow: 0 0 0 3px rgba(255, 56, 96, 0.1) !important;
+      }
+      .input-success {
+        border-color: #23d160 !important;
+        background-color: #f6ffef !important;
+        box-shadow: 0 0 0 3px rgba(35, 209, 96, 0.1) !important;
+      }
+      
+      /* Custom gradient background */
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center min-h-screen p-4"
+  >
+    <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-800">Create Account</h2>
+        <p class="text-gray-600 mt-2">Join us and start your journey</p>
+      </div>
 
-  <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
-    <div class="text-center mb-8">
-      <h2 class="text-3xl font-bold text-gray-800">Create Account</h2>
-      <p class="text-gray-600 mt-2">Sign up to get started</p>
+      <form id="signupForm">
+        <div class="mb-5">
+          <label
+            class="block text-gray-700 text-sm font-medium mb-2"
+            for="name"
+            >Full Name</label
+          >
+          <div class="relative">
+            <input
+              type="text"
+              id="name"
+              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none transition"
+              placeholder="Your full name"
+            />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+              <i class="fa fa-user text-gray-400"></i>
+            </div>
+          </div>
+          <div
+            id="nameError"
+            class="error-message text-red-500 text-xs mt-1 flex items-center"
+          >
+            <i class="fa fa-exclamation-circle mr-1"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <label
+            class="block text-gray-700 text-sm font-medium mb-2"
+            for="email"
+            >Email</label
+          >
+          <div class="relative">
+            <input
+              type="email"
+              id="email"
+              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none transition"
+              placeholder="your@email.com"
+            />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+              <i class="fa fa-envelope text-gray-400"></i>
+            </div>
+          </div>
+          <div
+            id="emailError"
+            class="error-message text-red-500 text-xs mt-1 flex items-center"
+          >
+            <i class="fa fa-exclamation-circle mr-1"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <label
+            class="block text-gray-700 text-sm font-medium mb-2"
+            for="password"
+            >Password</label
+          >
+          <div class="relative">
+            <input
+              type="password"
+              id="password"
+              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none transition"
+              placeholder="••••••••"
+            />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+              <i class="fa fa-lock text-gray-400"></i>
+            </div>
+          </div>
+          <div
+            id="passwordError"
+            class="error-message text-red-500 text-xs mt-1 flex items-center"
+          >
+            <i class="fa fa-exclamation-circle mr-1"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label
+            class="block text-gray-700 text-sm font-medium mb-2"
+            for="confirmPassword"
+            >Confirm Password</label
+          >
+          <div class="relative">
+            <input
+              type="password"
+              id="confirmPassword"
+              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none transition"
+              placeholder="••••••••"
+            />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+              <i class="fa fa-lock text-gray-400"></i>
+            </div>
+          </div>
+          <div
+            id="confirmPasswordError"
+            class="error-message text-red-500 text-xs mt-1 flex items-center"
+          >
+            <i class="fa fa-exclamation-circle mr-1"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="flex items-center mb-6">
+          <input
+            type="checkbox"
+            id="terms"
+            class="h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+          />
+          <label for="terms" class="ml-2 block text-sm text-gray-700">
+            I agree to the <a href="#" class="text-blue-500 hover:text-blue-700">Terms and Conditions</a>
+          </label>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition focus:ring-4 focus:ring-blue-200 font-medium flex items-center justify-center"
+          id="signupButton"
+        >
+          <i class="fa fa-user-plus mr-2"></i>
+          Create Account
+        </button>
+
+        <div class="mt-6 text-center">
+          <p class="text-sm text-gray-600">
+            Already have an account?
+            <a href="index.html" class="text-blue-500 hover:text-blue-700 font-medium"
+              >Sign in</a
+            >
+          </p>
+        </div>
+      </form>
+
+      <div
+        id="successMessage"
+        class="hidden mt-6 p-4 bg-green-100 text-green-700 rounded-lg text-center"
+      >
+        <i class="fa fa-check-circle mr-2"></i>
+        <span>Registration successful! Redirecting to login...</span>
+      </div>
     </div>
 
-    <form id="registerForm">
-      <!-- Username -->
-      <div class="mb-5">
-        <label class="block text-gray-700 text-sm font-medium mb-2" for="regEmail">Username</label>
-        <div class="relative">
-          <input type="username" id="regUsername" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition" placeholder="Andi"/>
-          <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-            <i class="fa fa-user-circle text-gray-400"></i>
-          </div>
-        </div>
-        <div id="usernameError" class="error-message text-red-500 text-xs mt-1 flex items-center">
-          <i class="fa fa-exclamation-circle mr-1"></i><span></span>
-        </div>
-      </div>
-      <!-- Email -->
-      <div class="mb-5">
-        <label class="block text-gray-700 text-sm font-medium mb-2" for="regEmail">Email</label>
-        <div class="relative">
-          <input type="email" id="regEmail" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition" placeholder="your@email.com"/>
-          <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-            <i class="fa fa-envelope text-gray-400"></i>
-          </div>
-        </div>
-        <div id="emailError" class="error-message text-red-500 text-xs mt-1 flex items-center">
-          <i class="fa fa-exclamation-circle mr-1"></i><span></span>
-        </div>
-      </div>
+    <script>
+      // Mendapatkan elemen input
+      const nameInput = document.getElementById("name");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const confirmPasswordInput = document.getElementById("confirmPassword");
+      const nameError = document.getElementById("nameError");
+      const emailError = document.getElementById("emailError");
+      const passwordError = document.getElementById("passwordError");
+      const confirmPasswordError = document.getElementById("confirmPasswordError");
+      const signupForm = document.getElementById("signupForm");
+      const termsCheckbox = document.getElementById("terms");
 
-      <!-- Password -->
-      <div class="mb-6">
-        <label class="block text-gray-700 text-sm font-medium mb-2" for="regPassword">Password</label>
-        <div class="relative">
-          <input type="password" id="regPassword" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition" placeholder="••••••••"/>
-          <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-            <i class="fa fa-lock text-gray-400"></i>
-          </div>
-        </div>
-        <div id="passwordError" class="error-message text-red-500 text-xs mt-1 flex items-center">
-          <i class="fa fa-exclamation-circle mr-1"></i><span></span>
-        </div>
-      </div>
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
 
-      <!-- Register Button -->
-      <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition focus:ring-4 focus:ring-blue-200 font-medium flex items-center justify-center">
-        <i class="fa fa-user-plus mr-2"></i> Sign Up
-      </button>
+          const name = nameInput.value;
+          const email = emailInput.value;
+          const password = passwordInput.value;
+          const confirmPassword = confirmPasswordInput.value;
+          const termsAgreed = termsCheckbox.checked;
+          const successMessage = document.getElementById("successMessage");
 
-      <div class="mt-6 text-center">
-        <p class="text-sm text-gray-600">
-          Already have an account?
-          <a href="index.html" class="text-blue-500 hover:text-blue-700 font-medium">Sign in</a>
-        </p>
-      </div>
-    </form>
+          // Reset error messages dan style
+          nameError.classList.remove("show");
+          emailError.classList.remove("show");
+          passwordError.classList.remove("show");
+          confirmPasswordError.classList.remove("show");
+          
+          nameInput.classList.remove("input-error", "input-success");
+          emailInput.classList.remove("input-error", "input-success");
+          passwordInput.classList.remove("input-error", "input-success");
+          confirmPasswordInput.classList.remove("input-error", "input-success");
+          
+          // Hapus class shake sebelum validasi dimulai
+          signupForm.classList.remove("shake");
 
-    <div id="successMessage" class="hidden mt-6 p-4 bg-green-100 text-green-700 rounded-lg text-center">
-      <i class="fa fa-check-circle mr-2"></i>
-      <span>Registration successful! Redirecting...</span>
-    </div>
-  </div>
+          let isValid = true;
 
-  <script>
-    const registerForm = document.getElementById("registerForm");
-    const emailInput = document.getElementById("regEmail");
-    const passwordInput = document.getElementById("regPassword");
-    const emailError = document.getElementById("emailError");
-    const passwordError = document.getElementById("passwordError");
+          // Name validation
+          if (!name) {
+            showError(nameError, "Please enter your name", nameInput);
+            isValid = false;
+          } else if (name.length < 3) {
+            showError(nameError, "Name must be at least 3 characters", nameInput);
+            isValid = false;
+          } else {
+            hideError(nameError, nameInput);
+          }
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+          // Email validation
+          if (!email) {
+            showError(emailError, "Please enter your email", emailInput);
+            isValid = false;
+          } else if (!isValidEmail(email)) {
+            showError(emailError, "Please enter a valid email", emailInput);
+            isValid = false;
+          } else {
+            hideError(emailError, emailInput);
+          }
 
-    registerForm.addEventListener("submit", function(e) {
-      e.preventDefault();
+          // Password validation
+          if (!password) {
+            showError(passwordError, "Please enter a password", passwordInput);
+            isValid = false;
+          } else if (password.length < 6) {
+            showError(passwordError, "Password must be at least 6 characters", passwordInput);
+            isValid = false;
+          } else {
+            hideError(passwordError, passwordInput);
+          }
 
-      const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
-      const successMessage = document.getElementById("successMessage");
+          // Confirm Password validation
+          if (!confirmPassword) {
+            showError(confirmPasswordError, "Please confirm your password", confirmPasswordInput);
+            isValid = false;
+          } else if (password !== confirmPassword) {
+            showError(confirmPasswordError, "Passwords do not match", confirmPasswordInput);
+            isValid = false;
+          } else {
+            hideError(confirmPasswordError, confirmPasswordInput);
+          }
 
-      // Reset error state
-      emailError.classList.remove("show");
-      passwordError.classList.remove("show");
-      emailInput.classList.remove("input-error", "input-success");
-      passwordInput.classList.remove("input-error", "input-success");
+          // Terms validation
+          if (!termsAgreed) {
+            // Highlight the terms checkbox
+            termsCheckbox.classList.add("border-red-500");
+            isValid = false;
+          } else {
+            termsCheckbox.classList.remove("border-red-500");
+          }
 
-      let isValid = true;
+          if (!isValid) {
+            // Trigger shake animation untuk validation error
+            triggerShakeAnimation();
+            return;
+          }
 
-      if (!email) {
-        showError(emailError, "Harap isi email", emailInput);
-        isValid = false;
-      } else if (!isValidEmail(email)) {
-        showError(emailError, "Harap isi dengan benar", emailInput);
-        isValid = false;
-      } else if (users.find(u => u.email === email)) {
-        showError(emailError, "Email sudah terdaftar", emailInput);
-        isValid = false;
-      } else {
-        hideError(emailError, emailInput);
+          // Check if email already exists in localStorage
+          let users = JSON.parse(localStorage.getItem("users")) || [];
+          if (users.find(u => u.email === email)) {
+            showError(emailError, "Email already registered", emailInput);
+            triggerShakeAnimation();
+            return;
+          }
+
+          // Save user to localStorage
+          users.push({ 
+            name: name,
+            email: email, 
+            password: password 
+          });
+          localStorage.setItem("users", JSON.stringify(users));
+
+          // Show success message
+          successMessage.classList.remove("hidden");
+
+          // Change button to loading state
+          const signupButton = document.getElementById("signupButton");
+          signupButton.innerHTML =
+            '<i class="fa fa-spinner fa-spin mr-2"></i> Creating Account...';
+          signupButton.disabled = true;
+
+          // Simulate redirect after 2 seconds
+          setTimeout(() => {
+            window.location.href = "index.html"; // redirect to login page
+          }, 2000);
+        });
+
+      function showError(element, message, inputElement = null) {
+        element.querySelector("span").textContent = message;
+        element.classList.add("show");
+        
+        // Tambahkan class error ke input jika diberikan
+        if (inputElement) {
+          inputElement.classList.add("input-error");
+          inputElement.classList.remove("input-success");
+        }
       }
 
-      if (!password) {
-        showError(passwordError, "Harap isi password", passwordInput);
-        isValid = false;
-      } else if (password.length < 4) {
-        showError(passwordError, "Setidaknya masukkan 4 karakter", passwordInput);
-        isValid = false;
-      } else {
-        hideError(passwordError, passwordInput);
+      function hideError(element, inputElement = null) {
+        element.classList.remove("show");
+        
+        // Hapus class error dan tambahkan success ke input jika diberikan
+        if (inputElement) {
+          inputElement.classList.remove("input-error");
+          inputElement.classList.add("input-success");
+        }
       }
 
-      if (!isValid) return;
+      function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      }
 
-      // Simpan ke localStorage
-      users.push({ email, password });
-      localStorage.setItem("users", JSON.stringify(users));
+      // Fungsi untuk trigger shake animation
+      function triggerShakeAnimation() {
+        // Hapus class shake terlebih dahulu
+        signupForm.classList.remove("shake");
+        
+        // Trigger reflow untuk mereset animation
+        void signupForm.offsetWidth;
+        
+        // Tambahkan class shake kembali
+        signupForm.classList.add("shake");
+        
+        // Hapus class shake setelah animation selesai
+        setTimeout(() => {
+          signupForm.classList.remove("shake");
+        }, 500);
+      }
 
-      successMessage.classList.remove("hidden");
-      setTimeout(() => {
-        window.location.href = "index.html"; // redirect ke login
-      }, 2000);
-    });
+      // Add real-time validation
+      nameInput.addEventListener("blur", function () {
+        const name = this.value;
 
-    function showError(element, message, inputElement) {
-      element.querySelector("span").textContent = message;
-      element.classList.add("show");
-      if (inputElement) inputElement.classList.add("input-error");
-    }
+        if (!name) {
+          showError(nameError, "Please enter your name", this);
+        } else if (name.length < 3) {
+          showError(nameError, "Name must be at least 3 characters", this);
+        } else {
+          hideError(nameError, this);
+        }
+      });
 
-    function hideError(element, inputElement) {
-      element.classList.remove("show");
-      if (inputElement) inputElement.classList.add("input-success");
-    }
+      emailInput.addEventListener("blur", function () {
+        const email = this.value;
 
-    function isValidEmail(email) {
-      const re = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
-      return re.test(email);
-    }
-  </script>
-</body>
+        if (!email) {
+          showError(emailError, "Please enter your email", this);
+        } else if (!isValidEmail(email)) {
+          showError(emailError, "Please enter a valid email", this);
+        } else {
+          hideError(emailError, this);
+        }
+      });
+
+      passwordInput.addEventListener("blur", function () {
+        const password = this.value;
+
+        if (!password) {
+          showError(passwordError, "Please enter a password", this);
+        } else if (password.length < 6) {
+          showError(passwordError, "Password must be at least 6 characters", this);
+        } else {
+          hideError(passwordError, this);
+        }
+      });
+
+      confirmPasswordInput.addEventListener("blur", function () {
+        const confirmPassword = this.value;
+        const password = passwordInput.value;
+
+        if (!confirmPassword) {
+          showError(confirmPasswordError, "Please confirm your password", this);
+        } else if (password !== confirmPassword) {
+          showError(confirmPasswordError, "Passwords do not match", this);
+        } else {
+          hideError(confirmPasswordError, this);
+        }
+      });
+
+      // Event listener untuk menghapus error style saat user mulai mengetik
+      nameInput.addEventListener("input", function () {
+        if (this.classList.contains("input-error")) {
+          this.classList.remove("input-error");
+          nameError.classList.remove("show");
+        }
+      });
+
+      emailInput.addEventListener("input", function () {
+        if (this.classList.contains("input-error")) {
+          this.classList.remove("input-error");
+          emailError.classList.remove("show");
+        }
+      });
+
+      passwordInput.addEventListener("input", function () {
+        if (this.classList.contains("input-error")) {
+          this.classList.remove("input-error");
+          passwordError.classList.remove("show");
+        }
+      });
+
+      confirmPasswordInput.addEventListener("input", function () {
+        if (this.classList.contains("input-error")) {
+          this.classList.remove("input-error");
+          confirmPasswordError.classList.remove("show");
+        }
+      });
+
+      termsCheckbox.addEventListener("change", function() {
+        if (this.checked) {
+          this.classList.remove("border-red-500");
+        }
+      });
+    </script>
+  </body>
 </html>
