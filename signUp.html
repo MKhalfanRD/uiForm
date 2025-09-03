@@ -34,7 +34,7 @@
           transform: translateX(10px);
         }
       }
-      
+
       /* CSS untuk input error dan success */
       .input-error {
         border-color: #ff3860 !important;
@@ -46,7 +46,7 @@
         background-color: #f6ffef !important;
         box-shadow: 0 0 0 3px rgba(35, 209, 96, 0.1) !important;
       }
-      
+
       /* Custom gradient background */
       .gradient-bg {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -64,9 +64,7 @@
 
       <form id="signupForm">
         <div class="mb-5">
-          <label
-            class="block text-gray-700 text-sm font-medium mb-2"
-            for="name"
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="name"
             >Full Name</label
           >
           <div class="relative">
@@ -167,16 +165,29 @@
           </div>
         </div>
 
-        <div class="flex items-center mb-6">
-          <input
-            type="checkbox"
-            id="terms"
-            class="h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded"
-          />
-          <label for="terms" class="ml-2 block text-sm text-gray-700">
-            I agree to the <a href="#" class="text-blue-500 hover:text-blue-700">Terms and Conditions</a>
-          </label>
+        <div class="flex flex-col">
+            <div class="flex items-center mb-6">
+              <input
+                type="checkbox"
+                id="terms"
+                class="h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+              />
+              <label for="terms" class="ml-2 block text-sm text-gray-700">
+                I agree to the
+                <a href="#" class="text-blue-500 hover:text-blue-700"
+                  >Terms and Conditions</a
+                >
+              </label>
+            </div>
+            <div
+              id="termsError"
+              class="error-message text-red-500 text-xs mb-4 -mt-4 flex items-center"
+            >
+              <i class="fa fa-exclamation-circle mr-1"></i>
+              <span></span>
+            </div>
         </div>
+        
 
         <button
           type="submit"
@@ -190,7 +201,9 @@
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-600">
             Already have an account?
-            <a href="index.html" class="text-blue-500 hover:text-blue-700 font-medium"
+            <a
+              href="index.html"
+              class="text-blue-500 hover:text-blue-700 font-medium"
               >Sign in</a
             >
           </p>
@@ -215,7 +228,9 @@
       const nameError = document.getElementById("nameError");
       const emailError = document.getElementById("emailError");
       const passwordError = document.getElementById("passwordError");
-      const confirmPasswordError = document.getElementById("confirmPasswordError");
+      const confirmPasswordError = document.getElementById(
+        "confirmPasswordError"
+      );
       const signupForm = document.getElementById("signupForm");
       const termsCheckbox = document.getElementById("terms");
 
@@ -229,19 +244,24 @@
           const password = passwordInput.value;
           const confirmPassword = confirmPasswordInput.value;
           const termsAgreed = termsCheckbox.checked;
+          const termsError = document.getElementById("termsError");
+
           const successMessage = document.getElementById("successMessage");
+
+          // Reset error messages
+          termsError.classList.remove("show");
 
           // Reset error messages dan style
           nameError.classList.remove("show");
           emailError.classList.remove("show");
           passwordError.classList.remove("show");
           confirmPasswordError.classList.remove("show");
-          
+
           nameInput.classList.remove("input-error", "input-success");
           emailInput.classList.remove("input-error", "input-success");
           passwordInput.classList.remove("input-error", "input-success");
           confirmPasswordInput.classList.remove("input-error", "input-success");
-          
+
           // Hapus class shake sebelum validasi dimulai
           signupForm.classList.remove("shake");
 
@@ -252,7 +272,11 @@
             showError(nameError, "Please enter your name", nameInput);
             isValid = false;
           } else if (name.length < 3) {
-            showError(nameError, "Name must be at least 3 characters", nameInput);
+            showError(
+              nameError,
+              "Name must be at least 3 characters",
+              nameInput
+            );
             isValid = false;
           } else {
             hideError(nameError, nameInput);
@@ -274,7 +298,11 @@
             showError(passwordError, "Please enter a password", passwordInput);
             isValid = false;
           } else if (password.length < 6) {
-            showError(passwordError, "Password must be at least 6 characters", passwordInput);
+            showError(
+              passwordError,
+              "Password must be at least 6 characters",
+              passwordInput
+            );
             isValid = false;
           } else {
             hideError(passwordError, passwordInput);
@@ -282,10 +310,18 @@
 
           // Confirm Password validation
           if (!confirmPassword) {
-            showError(confirmPasswordError, "Please confirm your password", confirmPasswordInput);
+            showError(
+              confirmPasswordError,
+              "Please confirm your password",
+              confirmPasswordInput
+            );
             isValid = false;
           } else if (password !== confirmPassword) {
-            showError(confirmPasswordError, "Passwords do not match", confirmPasswordInput);
+            showError(
+              confirmPasswordError,
+              "Passwords do not match",
+              confirmPasswordInput
+            );
             isValid = false;
           } else {
             hideError(confirmPasswordError, confirmPasswordInput);
@@ -294,9 +330,11 @@
           // Terms validation
           if (!termsAgreed) {
             // Highlight the terms checkbox
+            showError(termsError, "You must agree to the Terms and Conditions");
             termsCheckbox.classList.add("border-red-500");
             isValid = false;
           } else {
+            hideError(termsError);
             termsCheckbox.classList.remove("border-red-500");
           }
 
@@ -308,17 +346,17 @@
 
           // Check if email already exists in localStorage
           let users = JSON.parse(localStorage.getItem("users")) || [];
-          if (users.find(u => u.email === email)) {
+          if (users.find((u) => u.email === email)) {
             showError(emailError, "Email already registered", emailInput);
             triggerShakeAnimation();
             return;
           }
 
           // Save user to localStorage
-          users.push({ 
+          users.push({
             name: name,
-            email: email, 
-            password: password 
+            email: email,
+            password: password,
           });
           localStorage.setItem("users", JSON.stringify(users));
 
@@ -340,7 +378,7 @@
       function showError(element, message, inputElement = null) {
         element.querySelector("span").textContent = message;
         element.classList.add("show");
-        
+
         // Tambahkan class error ke input jika diberikan
         if (inputElement) {
           inputElement.classList.add("input-error");
@@ -350,7 +388,7 @@
 
       function hideError(element, inputElement = null) {
         element.classList.remove("show");
-        
+
         // Hapus class error dan tambahkan success ke input jika diberikan
         if (inputElement) {
           inputElement.classList.remove("input-error");
@@ -367,13 +405,13 @@
       function triggerShakeAnimation() {
         // Hapus class shake terlebih dahulu
         signupForm.classList.remove("shake");
-        
+
         // Trigger reflow untuk mereset animation
         void signupForm.offsetWidth;
-        
+
         // Tambahkan class shake kembali
         signupForm.classList.add("shake");
-        
+
         // Hapus class shake setelah animation selesai
         setTimeout(() => {
           signupForm.classList.remove("shake");
@@ -411,7 +449,11 @@
         if (!password) {
           showError(passwordError, "Please enter a password", this);
         } else if (password.length < 6) {
-          showError(passwordError, "Password must be at least 6 characters", this);
+          showError(
+            passwordError,
+            "Password must be at least 6 characters",
+            this
+          );
         } else {
           hideError(passwordError, this);
         }
@@ -459,7 +501,7 @@
         }
       });
 
-      termsCheckbox.addEventListener("change", function() {
+      termsCheckbox.addEventListener("change", function () {
         if (this.checked) {
           this.classList.remove("border-red-500");
         }
