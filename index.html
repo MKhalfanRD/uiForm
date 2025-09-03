@@ -1,206 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Form with Validation</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    .error-message {
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-    }
-    .error-message.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .shake {
-      animation: shake 0.5s ease-in-out;
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-10px); }
-      75% { transform: translateX(10px); }
-    }
-  </style>
-</head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center min-h-screen p-4">
-  <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
-    <div class="text-center mb-8">
-      <h2 class="text-3xl font-bold text-gray-800">Welcome</h2>
-      <p class="text-gray-600 mt-2">Sign in to your account</p>
-    </div>
-    
-    <form id="loginForm">
-      <div class="mb-5">
-        <label class="block text-gray-700 text-sm font-medium mb-2" for="email">Email</label>
-        <div class="relative">
-          <input 
-            type="email" 
-            id="email" 
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition" 
-            placeholder="your@email.com"
-          />
-          <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-            <i class="fa fa-envelope text-gray-400"></i>
-          </div>
-        </div>
-        <div id="emailError" class="error-message text-red-500 text-xs mt-1 flex items-center">
-          <i class="fa fa-exclamation-circle mr-1"></i>
-          <span></span>
-        </div>
-      </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form with Validation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      .error-message {
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+      }
+      .error-message.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .shake {
+        animation: shake 0.5s ease-in-out;
+      }
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px);
+        }
+        75% {
+          transform: translateX(10px);
+        }
+      }
       
-      <div class="mb-6">
-        <label class="block text-gray-700 text-sm font-medium mb-2" for="password">Password</label>
-        <div class="relative">
-          <input 
-            type="password" 
-            id="password" 
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition" 
-            placeholder="••••••••" 
-          />
-          <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-            <i class="fa fa-lock text-gray-400"></i>
-          </div>
-        </div>
-        <div id="passwordError" class="error-message text-red-500 text-xs mt-1 flex items-center">
-          <i class="fa fa-exclamation-circle mr-1"></i>
-          <span></span>
-        </div>
+      /* CSS untuk input error dan success */
+      .input-error {
+        border-color: #ff3860 !important;
+        background-color: #fff5f5 !important;
+        box-shadow: 0 0 0 3px rgba(255, 56, 96, 0.1) !important;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center min-h-screen p-4"
+  >
+    <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-800">Welcome</h2>
+        <p class="text-gray-600 mt-2">Sign in to your account</p>
       </div>
-      
-      <div class="flex items-center justify-between mb-6">
-        <div class="flex items-center">
-          <input type="checkbox" id="remember" class="h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded">
-          <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
-        </div>
-        <a href="#" class="text-sm text-blue-500 hover:text-blue-700">Forgot Password?</a>
-      </div>
-      
-      <button 
-        type="submit" 
-        class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition focus:ring-4 focus:ring-blue-200 font-medium flex items-center justify-center"
-        id="loginButton"
-      >
-        <i class="fa fa-sign-in-alt mr-2"></i>
-        Sign In
-      </button>
-      
-      <div class="mt-6 text-center">
-        <p class="text-sm text-gray-600">
-          Don't have an account? 
-          <a href="#" class="text-blue-500 hover:text-blue-700 font-medium">Sign up</a>
-        </p>
-      </div>
-    </form>
-    
-    <div id="successMessage" class="hidden mt-6 p-4 bg-green-100 text-green-700 rounded-lg text-center">
-      <i class="fa fa-check-circle mr-2"></i>
-      <span>Login successful! Redirecting...</span>
-    </div>
-  </div>
 
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const emailError = document.getElementById('emailError');
-      const passwordError = document.getElementById('passwordError');
-      const successMessage = document.getElementById('successMessage');
-      
-      // Reset error messages
-      emailError.classList.remove('show');
-      passwordError.classList.remove('show');
-      document.getElementById('loginForm').classList.remove('shake');
-      
-      let isValid = true;
-      
-      // Email validation
-      if (!email) {
-        showError(emailError, 'Email is required');
-        isValid = false;
-      } else if (!isValidEmail(email)) {
-        showError(emailError, 'Please enter a valid email');
-        isValid = false;
-      }
-      
-      // Password validation
-      if (!password) {
-        showError(passwordError, 'Password is required');
-        isValid = false;
-      } else if (password.length < 4) {
-        showError(passwordError, 'Password must be at least 4 characters');
-        isValid = false;
-      }
-      
-      if (!isValid) {
-        document.getElementById('loginForm').classList.add('shake');
-        return;
-      }
-      
-      // Check credentials (dummy validation)
-      if (email === "admin@gmail.com" && password === "1234") {
-        // Show success message
-        successMessage.classList.remove('hidden');
+      <form id="loginForm">
+        <div class="mb-5">
+          <label
+            class="block text-gray-700 text-sm font-medium mb-2"
+            for="email"
+            >Email</label
+          >
+          <div class="relative">
+            <input
+              type="email"
+              id="email"
+              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition"
+              placeholder="your@email.com"
+            />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+              <i class="fa fa-envelope text-gray-400"></i>
+            </div>
+          </div>
+          <div
+            id="emailError"
+            class="error-message text-red-500 text-xs mt-1 flex items-center"
+          >
+            <i class="fa fa-exclamation-circle mr-1"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label
+            class="block text-gray-700 text-sm font-medium mb-2"
+            for="password"
+            >Password</label
+          >
+          <div class="relative">
+            <input
+              type="password"
+              id="password"
+              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition"
+              placeholder="••••••••"
+            />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+              <i class="fa fa-lock text-gray-400"></i>
+            </div>
+          </div>
+          <div
+            id="passwordError"
+            class="error-message text-red-500 text-xs mt-1 flex items-center"
+          >
+            <i class="fa fa-exclamation-circle mr-1"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center">
+            <input
+              type="checkbox"
+              id="remember"
+              class="h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+            />
+            <label for="remember" class="ml-2 block text-sm text-gray-700"
+              >Remember me</label
+            >
+          </div>
+          <a href="#" class="text-sm text-blue-500 hover:text-blue-700"
+            >Forgot Password?</a
+          >
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition focus:ring-4 focus:ring-blue-200 font-medium flex items-center justify-center"
+          id="loginButton"
+        >
+          <i class="fa fa-sign-in-alt mr-2"></i>
+          Sign In
+        </button>
+
+        <div class="mt-6 text-center">
+          <p class="text-sm text-gray-600">
+            Don't have an account?
+            <a href="#" class="text-blue-500 hover:text-blue-700 font-medium"
+              >Sign up</a
+            >
+          </p>
+        </div>
+      </form>
+
+      <div
+        id="successMessage"
+        class="hidden mt-6 p-4 bg-green-100 text-green-700 rounded-lg text-center"
+      >
+        <i class="fa fa-check-circle mr-2"></i>
+        <span>Login successful! Redirecting...</span>
+      </div>
+    </div>
+
+    <script>
+      // Mendapatkan elemen input
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const emailError = document.getElementById("emailError");
+      const passwordError = document.getElementById("passwordError");
+      const loginForm = document.getElementById("loginForm");
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const email = emailInput.value;
+          const password = passwordInput.value;
+          const successMessage = document.getElementById("successMessage");
+
+          // Reset error messages dan style
+          emailError.classList.remove("show");
+          passwordError.classList.remove("show");
+          emailInput.classList.remove("input-error", "input-success");
+          passwordInput.classList.remove("input-error", "input-success");
+          
+          // Hapus class shake sebelum validasi dimulai
+          loginForm.classList.remove("shake");
+
+          let isValid = true;
+
+          // Email validation
+          if (!email) {
+            showError(emailError, "Harap isi email", emailInput);
+            isValid = false;
+          } else if (!isValidEmail(email)) {
+            showError(emailError, "Harap isi dengan benar", emailInput);
+            isValid = false;
+          } else {
+            hideError(emailError, emailInput);
+          }
+
+          // Password validation
+          if (!password) {
+            showError(passwordError, "Harap isi password", passwordInput);
+            isValid = false;
+          } else if (password.length < 4) {
+            showError(passwordError, "Setidaknya masukkan 4 karakter", passwordInput);
+            isValid = false;
+          } else {
+            hideError(passwordError, passwordInput);
+          }
+
+          if (!isValid) {
+            // Trigger shake animation untuk validation error
+            triggerShakeAnimation();
+            return;
+          }
+
+          // Check credentials (dummy validation)
+          if (email === "admin@gmail.com" && password === "1234") {
+            // Show success message
+            successMessage.classList.remove("hidden");
+
+            // Change button to loading state
+            const loginButton = document.getElementById("loginButton");
+            loginButton.innerHTML =
+              '<i class="fa fa-spinner fa-spin mr-2"></i> Signing In...';
+            loginButton.disabled = true;
+
+            // Simulate redirect after 2 seconds
+            setTimeout(() => {
+              window.location.href = "profile.html"; // redirect to profile page
+            }, 2000);
+          } else {
+            // Show general error dan set input ke error state
+            showError(passwordError, "Email & Password salah", passwordInput);
+            // showError(emailError, "Email & Password salah", emailInput);
+            
+            // Trigger shake animation untuk login gagal
+            triggerShakeAnimation();
+          }
+        });
+
+      function showError(element, message, inputElement = null) {
+        element.querySelector("span").textContent = message;
+        element.classList.add("show");
         
-        // Change button to loading state
-        const loginButton = document.getElementById('loginButton');
-        loginButton.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> Signing In...';
-        loginButton.disabled = true;
+        // Tambahkan class error ke input jika diberikan
+        if (inputElement) {
+          inputElement.classList.add("input-error");
+          inputElement.classList.remove("input-success");
+        }
+      }
+
+      function hideError(element, inputElement = null) {
+        element.classList.remove("show");
         
-        // Simulate redirect after 2 seconds
+        // Hapus class error dan tambahkan success ke input jika diberikan
+        if (inputElement) {
+          inputElement.classList.remove("input-error");
+          inputElement.classList.add("input-success");
+        }
+      }
+
+      function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      }
+
+      // Fungsi untuk trigger shake animation
+      function triggerShakeAnimation() {
+        // Hapus class shake terlebih dahulu
+        loginForm.classList.remove("shake");
+        
+        // Trigger reflow untuk mereset animation
+        void loginForm.offsetWidth;
+        
+        // Tambahkan class shake kembali
+        loginForm.classList.add("shake");
+        
+        // Hapus class shake setelah animation selesai
         setTimeout(() => {
-          window.location.href = "profile.html"; // redirect to profile page
-        }, 2000);
-      } else {
-        // Show general error
-        showError(emailError, 'Invalid email or password');
-        showError(passwordError, 'Invalid email or password');
-        document.getElementById('loginForm').classList.add('shake');
+          loginForm.classList.remove("shake");
+        }, 500);
       }
-    });
-    
-    function showError(element, message) {
-      element.querySelector('span').textContent = message;
-      element.classList.add('show');
-    }
-    
-    function isValidEmail(email) {
-      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return re.test(email);
-    }
-    
-    // Add real-time validation
-    document.getElementById('email').addEventListener('blur', function() {
-      const email = this.value;
-      const emailError = document.getElementById('emailError');
-      
-      if (!email) {
-        showError(emailError, 'Email is required');
-      } else if (!isValidEmail(email)) {
-        showError(emailError, 'Please enter a valid email');
-      } else {
-        emailError.classList.remove('show');
-      }
-    });
-    
-    document.getElementById('password').addEventListener('blur', function() {
-      const password = this.value;
-      const passwordError = document.getElementById('passwordError');
-      
-      if (!password) {
-        showError(passwordError, 'Password is required');
-      } else if (password.length < 4) {
-        showError(passwordError, 'Password must be at least 4 characters');
-      } else {
-        passwordError.classList.remove('show');
-      }
-    });
-  </script>
-</body>
+
+      // Add real-time validation
+      emailInput.addEventListener("blur", function () {
+        const email = this.value;
+
+        if (!email) {
+          showError(emailError, "Harap isi email", this);
+        } else if (!isValidEmail(email)) {
+          showError(emailError, "Harap isi dengan benar", this);
+        } else {
+          hideError(emailError, this);
+        }
+      });
+
+      passwordInput.addEventListener("blur", function () {
+        const password = this.value;
+
+        if (!password) {
+          showError(passwordError, "Harap isi password", this);
+        } else if (password.length < 4) {
+          showError(passwordError, "Setidaknya masukkan 4 karakter", this);
+        } else {
+          hideError(passwordError, this);
+        }
+      });
+
+      // Event listener untuk menghapus error style saat user mulai mengetik
+      emailInput.addEventListener("input", function () {
+        if (this.classList.contains("input-error")) {
+          this.classList.remove("input-error");
+          emailError.classList.remove("show");
+        }
+      });
+
+      passwordInput.addEventListener("input", function () {
+        if (this.classList.contains("input-error")) {
+          this.classList.remove("input-error");
+          passwordError.classList.remove("show");
+        }
+      });
+    </script>
+  </body>
 </html>
