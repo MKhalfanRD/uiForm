@@ -1,0 +1,566 @@
+<div class="table-view bg-white rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-lg font-bold text-gray-800">Login History</h3>
+            </div>
+
+            <div class="table-container">
+              <table class="collapse-table w-full">
+                <thead>
+                  <tr class="text-left text-gray-500 text-sm border-b">
+                    <th class="pb-4 px-4">Date</th>
+                    <th class="pb-4 px-4">Device</th>
+                    <th class="pb-4 px-4">Location</th>
+                    <th class="pb-4 px-4">Details</th>
+                    <th class="pb-4 px-4">Status</th>
+                    <!-- <th class="pb-4 px-4 text-center">Action</th> -->
+                  </tr>
+                </thead>
+                <tbody class="divide-y">
+                  <!-- Baris 1 - Optimized for Mobile -->
+                  <tr class="main-row hover:bg-gray-50">
+                    <td class="py-3 px-4">
+                      <div class="flex flex-col min-w-[90px]">
+                        <span class="text-sm font-medium whitespace-nowrap"
+                          >Oct 15</span
+                        >
+                        <span class="text-xs text-gray-500">10:30 AM</span>
+                        <span class="text-xs text-gray-400 md:hidden"
+                          >2023</span
+                        >
+                      </div>
+                    </td>
+                    <td class="py-3 px-4">
+                      <div class="flex items-center justify-between">
+                        <div class="flex-1 min-w-0">
+                          <div
+                            class="text-sm font-medium text-gray-900 truncate"
+                          >
+                            Chrome Windows
+                          </div>
+                          <div class="text-xs text-gray-500 truncate md:hidden">
+                            Jakarta, Indonesia
+                          </div>
+                          <div class="text-xs text-gray-400 md:hidden">
+                            <span
+                              class="px-1 py-0.5 bg-green-100 text-green-700 rounded-full"
+                              >Success</span
+                            >
+                          </div>
+                        </div>
+                        <button
+                          class="text-blue-600 hover:text-blue-800 expand-btn ml-2 md:ml-0"
+                        >
+                          <i class="fas fa-chevron-down text-sm"></i>
+                        </button>
+                      </div>
+
+                      <!-- Hidden columns that will show in expand -->
+                      <div class="hidden md:block">
+                        <div
+                          class="text-sm truncate"
+                          title="Chrome 117.0.5938.92 pada Windows 11 Pro"
+                        >
+                          Chrome 117.0.5938.92 pada Windows 11 Pro
+                        </div>
+                      </div>
+                    </td>
+                    <td class="py-3 px-4 hidden md:table-cell">
+                      <div
+                        class="text-sm"
+                        title="Jakarta, Indonesia (IP: 192.168.1.101)"
+                      >
+                        Jakarta, Indonesia
+                      </div>
+                    </td>
+                    <td class="py-3 px-4 hidden lg:table-cell">
+                      <div
+                        class="text-sm truncate"
+                        title="Login dari jaringan kantor, menggunakan authentication two-factor"
+                      >
+                        Login dari jaringan kantor...
+                      </div>
+                    </td>
+                    <td class="py-3 px-4 hidden md:table-cell">
+                      <span
+                        class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+                        >Success</span
+                      >
+                    </td>
+                  </tr>
+                  <tr class="detail-row">
+                    <td colspan="6">
+                      <div class="detail-content p-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Date & Time
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              October 15, 2023 at 10:30 AM
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Device
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Chrome 117.0.5938.92 pada Windows 11 Pro
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Location
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Jakarta, Indonesia (IP: 192.168.1.101)
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Status
+                            </div>
+                            <div class="detail-value">
+                              <span
+                                class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+                                >Success</span
+                              >
+                            </div>
+                          </div>
+                          <div class="detail-item md:col-span-2">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Details
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Login dari jaringan kantor, menggunakan
+                              authentication two-factor. Login ini dilakukan
+                              dari jaringan internal perusahaan yang terjamin
+                              keamanannya.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Baris 2 - Optimized for Mobile -->
+                  <tr class="main-row hover:bg-gray-50">
+                    <td class="py-3 px-4">
+                      <div class="flex flex-col min-w-[90px]">
+                        <span class="text-sm font-medium whitespace-nowrap"
+                          >Oct 14</span
+                        >
+                        <span class="text-xs text-gray-500">8:15 PM</span>
+                        <span class="text-xs text-gray-400 md:hidden"
+                          >2023</span
+                        >
+                      </div>
+                    </td>
+                    <td class="py-3 px-4">
+                      <div class="flex items-center justify-between">
+                        <div class="flex-1 min-w-0">
+                          <div
+                            class="text-sm font-medium text-gray-900 truncate"
+                          >
+                            Safari 16.6
+                          </div>
+                          <div class="text-xs text-gray-500 truncate md:hidden">
+                            Bandung, Indonesia
+                          </div>
+                          <div class="text-xs text-gray-400 md:hidden">
+                            <span
+                              class="px-1 py-0.5 bg-green-100 text-green-700 rounded-full"
+                              >Success</span
+                            >
+                          </div>
+                        </div>
+                        <button
+                          class="text-blue-600 hover:text-blue-800 expand-btn ml-2 md:ml-0"
+                        >
+                          <i class="fas fa-chevron-down text-sm"></i>
+                        </button>
+                      </div>
+
+                      <!-- Hidden columns that will show in expand -->
+                      <div class="hidden md:block">
+                        <div
+                          class="text-sm truncate"
+                          title="	Safari 16.6 pada iPhone 13 iOS 16.6"
+                        >
+                          Safari 16.6 pada iPhone 13 iOS 16.6
+                        </div>
+                      </div>
+                    </td>
+                    <td class="py-3 px-4 hidden md:table-cell">
+                      <div
+                        class="text-sm"
+                        title="Bandung, Indonesia (IP: 192.168.43.26)"
+                      >
+                        Bandung, Indonesia
+                      </div>
+                    </td>
+                    <td class="py-3 px-4 hidden lg:table-cell">
+                      <div
+                        class="text-sm truncate"
+                        title="Login dari jaringan kantor, menggunakan authentication two-factor"
+                      >
+                        Login dari jaringan ...
+                      </div>
+                    </td>
+                    <td class="py-3 px-4 hidden md:table-cell">
+                      <span
+                        class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+                        >Success</span
+                      >
+                    </td>
+                  </tr>
+                  <tr class="detail-row">
+                    <td colspan="6">
+                      <div class="detail-content p-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Date & Time
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Oct 14, 2023 8:15 PM
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Device
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Safari 16.6 pada iPhone 13 iOS 16.6
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Location
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Bandung, Indonesia (IP: 192.168.43.26)
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Status
+                            </div>
+                            <div class="detail-value">
+                              <span
+                                class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+                                >Success</span
+                              >
+                            </div>
+                          </div>
+                          <div class="detail-item md:col-span-2">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Details
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Login dari jaringan seluler Telkomsel, menggunakan
+                              fingerprint authentication. Perangkat ini telah
+                              terdaftar sebagai perangkat terpercaya.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Baris 3 - Optimized for Mobile -->
+                  <tr class="main-row hover:bg-gray-50">
+                    <td class="py-3 px-4">
+                      <div class="flex flex-col min-w-[90px]">
+                        <span class="text-sm font-medium whitespace-nowrap"
+                          >Oct 12</span
+                        >
+                        <span class="text-xs text-gray-500">3:45 PM</span>
+                        <span class="text-xs text-gray-400 md:hidden"
+                          >2023</span
+                        >
+                      </div>
+                    </td>
+                    <td class="py-3 px-4">
+                      <div class="flex items-center justify-between">
+                        <div class="flex-1 min-w-0">
+                          <div
+                            class="text-sm font-medium text-gray-900 truncate"
+                          >
+                            Firefox 118.0.1
+                          </div>
+                          <div class="text-xs text-gray-500 truncate md:hidden">
+                            Surabaya, Indonesia
+                          </div>
+                          <div class="text-xs text-gray-400 md:hidden">
+                            <span
+                              class="px-1 py-0.5 bg-green-100 text-green-700 rounded-full"
+                              >Success</span
+                            >
+                          </div>
+                        </div>
+                        <button
+                          class="text-blue-600 hover:text-blue-800 expand-btn ml-2 md:ml-0"
+                        >
+                          <i class="fas fa-chevron-down text-sm"></i>
+                        </button>
+                      </div>
+
+                      <!-- Hidden columns that will show in expand -->
+                      <div class="hidden md:block">
+                        <div
+                          class="text-sm truncate"
+                          title="Chrome 117.0.5938.92 pada Windows 11 Pro"
+                        >
+                          Firefox 118.0.1 pada macOS Ventura 13.5.2
+                        </div>
+                      </div>
+                    </td>
+                    <td class="py-3 px-4 hidden md:table-cell">
+                      <div
+                        class="text-sm"
+                        title="Surabaya, Indonesia (IP: 192.168.1.101)"
+                      >
+                        Surabaya, Indonesia
+                      </div>
+                    </td>
+                    <td class="py-3 px-4 hidden lg:table-cell">
+                      <div
+                        class="text-sm truncate"
+                        title="Login dari jaringan kantor, menggunakan authentication two-factor"
+                      >
+                        Login dari jaringan ...
+                      </div>
+                    </td>
+                    <td class="py-3 px-4 hidden md:table-cell">
+                      <span
+                        class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+                        >Success</span
+                      >
+                    </td>
+                  </tr>
+                  <tr class="detail-row">
+                    <td colspan="6">
+                      <div class="detail-content p-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Date & Time
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              October 12, 2023 at 3:45 PM
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Device
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Firefox 118.0.1 pada macOS Ventura 13.5.2
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Location
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Surabaya, Indonesia (IP: 10.25.136.42)
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Status
+                            </div>
+                            <div class="detail-value">
+                              <span
+                                class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+                                >Success</span
+                              >
+                            </div>
+                          </div>
+                          <div class="detail-item md:col-span-2">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Details
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Login dari jaringan wifi kafe, menggunakan
+                              password dan kode OTP yang dikirim via email.
+                              Login dari jaringan publik sehingga memerlukan
+                              verifikasi tambahan.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Baris 4 - Optimized for Mobile -->
+                  <tr class="main-row hover:bg-gray-50">
+                    <td class="py-3 px-4">
+                      <div class="flex flex-col min-w-[90px]">
+                        <span class="text-sm font-medium whitespace-nowrap"
+                          >Oct 10</span
+                        >
+                        <span class="text-xs text-gray-500">9:20 AM</span>
+                        <span class="text-xs text-gray-400 md:hidden"
+                          >2023</span
+                        >
+                      </div>
+                    </td>
+                    <td class="py-3 px-4">
+                      <div class="flex items-center justify-between">
+                        <div class="flex-1 min-w-0">
+                          <div
+                            class="text-sm font-medium text-gray-900 truncate"
+                          >
+                            Chrome Mobi-
+                          </div>
+                          <div class="text-xs text-gray-500 truncate md:hidden">
+                            Yogyakarta, Indonesia
+                          </div>
+                          <div class="text-xs text-gray-400 md:hidden">
+                            <span
+                              class="px-1 py-0.5 bg-red-100 text-red-700 rounded-full"
+                              >Failed</span
+                            >
+                          </div>
+                        </div>
+                        <button
+                          class="text-blue-600 hover:text-blue-800 expand-btn ml-2 md:ml-0"
+                        >
+                          <i class="fas fa-chevron-down text-sm"></i>
+                        </button>
+                      </div>
+
+                      <!-- Hidden columns that will show in expand -->
+                      <div class="hidden md:block">
+                        <div
+                          class="text-sm truncate"
+                          title="Chrome 117.0.5938.92 pada Windows 11 Pro"
+                        >
+                          Chrome Mobile 116.0.5845.163 pada Samsung Galaxy S21
+                          Android 13
+                        </div>
+                      </div>
+                    </td>
+                    <td class="py-3 px-4 hidden md:table-cell">
+                      <div
+                        class="text-sm"
+                        title="Yogyakarta, Indonesia (IP: 192.168.1.101)"
+                      >
+                        Yogyakarta, Indonesia
+                      </div>
+                    </td>
+                    <td class="py-3 px-4 hidden lg:table-cell">
+                      <div
+                        class="text-sm truncate"
+                        title="Login dari jaringan kantor, menggunakan authentication two-factor"
+                      >
+                        Login dari jaringan kantor...
+                      </div>
+                    </td>
+                    <td class="py-3 px-4 hidden md:table-cell">
+                      <span
+                        class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full"
+                        >Failed</span
+                      >
+                    </td>
+                  </tr>
+                  <tr class="detail-row">
+                    <td colspan="6">
+                      <div class="detail-content p-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Date & Time
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              October 10, 2023 at 9:20 AM
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Device
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Chrome Mobile 116.0.5845.163 pada Samsung Galaxy
+                              S21 Android 13
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Location
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Yogyakarta, Indonesia (IP: 172.16.254.12)
+                            </div>
+                          </div>
+                          <div class="detail-item">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Status
+                            </div>
+                            <div class="detail-value">
+                              <span
+                                class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full"
+                                >Failed</span
+                              >
+                            </div>
+                          </div>
+                          <div class="detail-item md:col-span-2">
+                            <div
+                              class="detail-label text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                            >
+                              Details
+                            </div>
+                            <div class="detail-value text-sm text-gray-900">
+                              Percobaan login dengan password yang salah
+                              sebanyak 3 kali, akun terkunci sementara selama 15
+                              menit. Setelah periode terkunci, pengguna berhasil
+                              login dengan reset password.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>

@@ -1,0 +1,237 @@
+
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+
+      .profile-header {
+        background: linear-gradient(120deg, #4f46e5, #7c3aed);
+      }
+
+      .stats-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-item {
+        transition: all 0.3s ease;
+      }
+
+      .nav-item:hover {
+        background-color: #f3f4f6;
+        border-left: 4px solid #4f46e5;
+      }
+
+      .active {
+        background-color: #f3f4f6;
+        border-left: 4px solid #4f46e5;
+        color: #4f46e5;
+      }
+
+      .content-section {
+        display: none;
+      }
+
+      .content-section.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Table responsive styles */
+      .table-container {
+        overflow-x: auto;
+        width: 100%;
+      }
+
+      .responsive-table {
+        width: 100%;
+        min-width: 600px;
+      }
+
+      .truncate-cell {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .has-tooltip {
+        position: relative;
+        cursor: help;
+      }
+
+      .has-tooltip:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 8px;
+        background-color: #333;
+        color: white;
+        border-radius: 4px;
+        font-size: 14px;
+        white-space: normal;
+        width: 250px;
+        z-index: 100;
+      }
+
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: white;
+        padding: 24px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+
+      /* Card view for mobile */
+      @media (max-width: 768px) {
+        .card-view {
+          display: block;
+        }
+
+        .table-view {
+          display: none;
+        }
+      }
+
+      @media (min-width: 769px) {
+        .card-view {
+          display: none;
+        }
+
+        .table-view {
+          display: block;
+        }
+      }
+
+      /* Collapse/Extend Table Styles */
+      .collapse-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .collapse-table tr.main-row {
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .collapse-table tr.main-row:hover {
+        background-color: #f7fafc;
+      }
+
+      .collapse-table .detail-row {
+        display: none;
+      }
+
+      .collapse-table .detail-row.expanded {
+        display: table-row;
+      }
+
+      .collapse-table .detail-content {
+        padding: 16px;
+        background-color: #f8fafc;
+        border-radius: 0 0 8px 8px;
+      }
+
+      .collapse-table .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 16px;
+      }
+
+      .collapse-table .detail-item {
+        margin-bottom: 12px;
+      }
+
+      .collapse-table .detail-label {
+        font-weight: 600;
+        color: #4a5568;
+        margin-bottom: 4px;
+        font-size: 14px;
+      }
+
+      .collapse-table .detail-value {
+        color: #2d3748;
+        font-size: 15px;
+      }
+
+      .collapse-table .icon-rotate {
+        transform: rotate(180deg);
+        transition: transform 0.3s ease;
+      }
+
+      /* Hide Location, Details, and Status columns from main view */
+      .collapse-table thead th:nth-child(3),
+      .collapse-table tbody td:nth-child(3),
+      .collapse-table thead th:nth-child(4),
+      .collapse-table tbody td:nth-child(4),
+      .collapse-table thead th:nth-child(5),
+      .collapse-table tbody td:nth-child(5) {
+        display: none;
+      }
+
+      /* Adjust column widths */
+      .collapse-table th:nth-child(1),
+      .collapse-table td:nth-child(1) {
+        width: 20%;
+      }
+
+      .collapse-table th:nth-child(2),
+      .collapse-table td:nth-child(2) {
+        width: 60%;
+      }
+
+      .collapse-table th:nth-child(6),
+      .collapse-table td:nth-child(6) {
+        width: 20%;
+        text-align: center;
+      }
+
+      @media (max-width: 768px) {
+        .collapse-table .detail-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .collapse-table th:nth-child(1),
+        .collapse-table td:nth-child(1) {
+          width: 40%;
+        }
+
+        .collapse-table th:nth-child(2),
+        .collapse-table td:nth-child(2) {
+          width: 40%;
+        }
+      }
