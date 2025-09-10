@@ -1,0 +1,195 @@
+<div class="bg-white rounded shadow-sm p-6">
+    <h1 class="text-lg mb-5 font-bold">Proyek : Bendungan Batu Tegi</h1>
+  <form action="">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div id="periode" class="flex flex-col">
+            <label for="periode" class="text-gray-700 text-sm font-medium mb-2">
+                Periode
+            </label>
+            <input type="text" name="periode" id="periode-input" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none">
+        </div>
+        <div id="balai" class="flex flex-col">
+            <label for="balai" class="text-gray-700 text-sm font-medium mb-2">
+                Balai
+            </label>
+            <select name="balai" id="balai-select" class="w-full border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none px-4 py-2">
+                <option value="">Pilih Balai</option>
+                <option value="balai1">Balai 1</option>
+                <option value="balai2">Balai 2</option>
+                <option value="balai3">Balai 3</option>
+            </select>
+        </div>
+        <div id="nama-proyek" class="flex flex-col">
+          <label for="nama-proyek" class="text-gray-700 text-sm font-medium mb-2">
+              Nama Proyek
+          </label>
+          <input type="text" name="nama-proyek" id="nama-proyek-input" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none" />
+        </div>
+        <div id="kegiatan" class="flex flex-col">
+            <label for="kegiatan" class="text-gray-700 text-sm font-medium mb-2">
+                Kegiatan
+            </label>
+            <select name="kegiatan" id="kegiatan-select" class="w-full border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none px-4 py-2">
+                <option value="">Pilih Kegiatan</option>
+                <option value="kegiatan1">Kegiatan 1</option>
+                <option value="kegiatan2">Kegiatan 2</option>
+                <option value="kegiatan3">Kegiatan 3</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- Container untuk form dinamis -->
+    <div id="dynamic-form-container" class="mt-6"></div>
+  </form>
+</div>
+
+<script>
+// Definisikan form untuk setiap kegiatan
+    const formTemplates = {
+        'kegiatan1': `
+            <div class="mt-6 p-4 border rounded-lg bg-blue-50">
+                <h2 class="text-md font-bold mb-4">Form untuk Kegiatan 1</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 text-sm font-medium mb-2">
+                            Tanggal Mulai
+                        </label>
+                        <input type="date" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 text-sm font-medium mb-2">
+                            Tanggal Selesai
+                        </label>
+                        <input type="date" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none">
+                    </div>
+                    <div class="flex flex-col md:col-span-2">
+                        <label class="text-gray-700 text-sm font-medium mb-2">
+                            Deskripsi Kegiatan
+                        </label>
+                        <textarea class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+        `,
+        'kegiatan2': `
+            <div class="mt-6 p-4 border rounded-lg bg-green-50">
+                <h2 class="text-md font-bold mb-4">Form untuk Kegiatan 2</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 text-sm font-medium mb-2">
+                            Lokasi
+                        </label>
+                        <input type="text" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 text-sm font-medium mb-2">
+                            Jumlah Personil
+                        </label>
+                        <input type="number" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 text-sm font-medium mb-2">
+                            Peralatan yang Dibutuhkan
+                        </label>
+                        <select class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none">
+                            <option>Pilih Peralatan</option>
+                            <option>Peralatan A</option>
+                            <option>Peralatan B</option>
+                            <option>Peralatan C</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 text-sm font-medium mb-2">
+                            Estimasi Biaya
+                        </label>
+                        <input type="text" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none" placeholder="Rp">
+                    </div>
+                </div>
+            </div>
+        `,
+        'kegiatan3': `
+            <div class="mt-6 p-4 border rounded-lg bg-yellow-50">
+                <h2 class="text-md font-bold mb-4">Form untuk Kegiatan 3</h2>
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 text-sm font-medium mb-2">
+                            Nama Koordinator
+                        </label>
+                        <input type="text" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 text-sm font-medium mb-2">
+                            Dokumen Pendukung
+                        </label>
+                        <input type="file" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 text-sm font-medium mb-2">
+                            Tingkat Prioritas
+                        </label>
+                        <div class="flex items-center space-x-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="prioritas" value="rendah" class="form-radio h-4 w-4 text-blue-600">
+                                <span class="ml-2 text-gray-700">Rendah</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="prioritas" value="sedang" class="form-radio h-4 w-4 text-blue-600">
+                                <span class="ml-2 text-gray-700">Sedang</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="prioritas" value="tinggi" class="form-radio h-4 w-4 text-blue-600">
+                                <span class="ml-2 text-gray-700">Tinggi</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+    };
+
+    // Fungsi untuk menginisialisasi form dinamis
+    function initDynamicForms() {
+        const kegiatanSelect = document.getElementById('kegiatan-select');
+        const dynamicFormContainer = document.getElementById('dynamic-form-container');
+        
+        if (!kegiatanSelect || !dynamicFormContainer) {
+            console.error('Elemen form dinamis tidak ditemukan');
+            return;
+        }
+        
+        // Event listener untuk perubahan pilihan kegiatan
+        kegiatanSelect.addEventListener('change', function() {
+            const selectedValue = this.value;
+            
+            // Kosongkan container form dinamis
+            dynamicFormContainer.innerHTML = '';
+            
+            // Tampilkan form yang sesuai jika ada pilihan
+            if (selectedValue && formTemplates[selectedValue]) {
+                dynamicFormContainer.innerHTML = formTemplates[selectedValue];
+            }
+        });
+        
+        // Jika ada nilai yang sudah dipilih sebelumnya, tampilkan form yang sesuai
+        if (kegiatanSelect.value && formTemplates[kegiatanSelect.value]) {
+            dynamicFormContainer.innerHTML = formTemplates[kegiatanSelect.value];
+        }
+        
+        // Trigger change event untuk menampilkan form awal jika sudah ada nilai
+        if (kegiatanSelect.value) {
+            kegiatanSelect.dispatchEvent(new Event('change'));
+        }
+    }
+
+    // Inisialisasi form dinamis ketika dokumen siap
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM fully loaded, initializing dynamic forms...');
+        initDynamicForms();
+    });
+
+    // Fallback: Jika DOM sudah dimuat saat script dijalankan
+    if (document.readyState !== 'loading') {
+        console.log('DOM already loaded, initializing dynamic forms...');
+        initDynamicForms();
+    }
+    </script>
