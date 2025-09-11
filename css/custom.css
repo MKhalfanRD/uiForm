@@ -263,3 +263,11 @@ body {
 .btn-restore:hover {
   background-color: #2563eb !important;
 }
+
+.periode{
+  margin-bottom: 2.2rem !important;
+}
+
+.periode-checkbox {
+  font-size: 20px;
+}
