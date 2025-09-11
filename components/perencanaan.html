@@ -1,40 +1,105 @@
 <div class="bg-white rounded shadow-sm p-6">
-    <h1 class="text-lg mb-5 font-bold">Proyek : Bendungan Batu Tegi</h1>
+    <h1 class="text-lg mb-5 font-bold">Form Proyek</h1>
   <form action="">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div id="periode" class="flex flex-col">
-            <label for="periode" class="text-gray-700 text-sm font-medium mb-2">
-                Periode
-            </label>
-            <input type="text" name="periode" id="periode-input" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none">
+        <div class="grid-kiri">
+            <div id="periode" class="flex flex-col">
+                <div class="flex flex-col flex-1">
+                        <label class="text-gray-700 text-sm font-medium mb-2">
+                            Peralatan yang Digunakan
+                        </label>
+                        <div class="flex flex-row">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="2020-2024" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                                <label for="2020-2024" class="ml-2 mr-2 block text-sm text-gray-700">2020-2024</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="2025-2029" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                                <label for="2025-2029" class="ml-2 block text-sm text-gray-700">2025-2029</label>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div id="balai" class="flex flex-col">
+                <label for="balai" class="text-gray-700 text-sm font-medium mb-2">
+                    Balai
+                </label>
+                <select name="balai" id="balai-select" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none mb-5">
+                    <option value="">Pilih Balai</option>
+                    <option value="balai1">Balai 1</option>
+                    <option value="balai2">Balai 2</option>
+                    <option value="balai3">Balai 3</option>
+                </select>
+            </div>
+            <div id="nama-proyek" class="flex flex-col">
+              <label for="nama-proyek" class="text-gray-700 text-sm font-medium mb-2">
+                  Nama Proyek
+              </label>
+              <input type="text" name="nama-proyek" id="nama-proyek-input" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none mb-5" />
+            </div>
+            <div id="masa-pelaksanaan" class="flex flex-col">
+                <label for="masa-pelaksanaan" class="text-gray-700 text-sm font-medium mb-2">
+                    Masa Pelaksanaan
+                </label>
+                <select name="masa-pelaksanaan" id="masa-pelaksanaan-select" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none mb-5">
+                    <option value="">Pilih Masa Pelaksanaan</option>
+                    <option value="masa-pelaksanaan1">Single Year</option>
+                    <option value="masa-pelaksanaan2">MYC</option>
+                    <option value="masa-pelaksanaan3">MYP</option>
+                </select>
+            </div>
         </div>
-        <div id="balai" class="flex flex-col">
-            <label for="balai" class="text-gray-700 text-sm font-medium mb-2">
-                Balai
-            </label>
-            <select name="balai" id="balai-select" class="w-full border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none px-4 py-2">
-                <option value="">Pilih Balai</option>
-                <option value="balai1">Balai 1</option>
-                <option value="balai2">Balai 2</option>
-                <option value="balai3">Balai 3</option>
-            </select>
-        </div>
-        <div id="nama-proyek" class="flex flex-col">
-          <label for="nama-proyek" class="text-gray-700 text-sm font-medium mb-2">
-              Nama Proyek
-          </label>
-          <input type="text" name="nama-proyek" id="nama-proyek-input" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none" />
-        </div>
-        <div id="kegiatan" class="flex flex-col">
-            <label for="kegiatan" class="text-gray-700 text-sm font-medium mb-2">
-                Kegiatan
-            </label>
-            <select name="kegiatan" id="kegiatan-select" class="w-full border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none px-4 py-2">
-                <option value="">Pilih Kegiatan</option>
-                <option value="kegiatan1">Kegiatan 1</option>
-                <option value="kegiatan2">Kegiatan 2</option>
-                <option value="kegiatan3">Kegiatan 3</option>
-            </select>
+        <div class="grid-kanan">
+            <div id="nomenklatur-tahun" class="flex flex-col">
+                <label for="nomenklatur-tahun" class="text-gray-700 text-sm font-medium mb-2">
+                    Nomenklatur Tahun
+                </label>
+                <select name="nomenklatur-tahun" id="nomenklatur-tahun-select" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none mb-5">
+                    <option value="">Pilih Nomenklatur Tahun</option>
+                    <option value="nomenklatur-tahun1">2025</option>
+                    <option value="nomenklatur-tahun2">2026</option>
+                    <option value="nomenklatur-tahun3">2027</option>
+                    <option value="nomenklatur-tahun4">2028</option>
+                    <option value="nomenklatur-tahun5">2029</option>
+                </select>
+            </div>
+            <div id="kegiatan" class="flex flex-col">
+                <label for="kegiatan" class="text-gray-700 text-sm font-medium mb-2">
+                    Kegiatan
+                </label>
+                <select name="kegiatan" id="kegiatan-select" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none mb-5">
+                    <option value="">Pilih Kegiatan</option>
+                    <option value="kegiatan1">Kegiatan 1</option>
+                    <option value="kegiatan2">Kegiatan 2</option>
+                    <option value="kegiatan3">Kegiatan 3</option>
+                </select>
+            </div>
+            <div id="kro" class="flex flex-col">
+                <label for="kro" class="text-gray-700 text-sm font-medium mb-2">
+                    KRO
+                </label>
+                <select name="kro" id="kro-select" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none mb-5">
+                    <option value="">Pilih Nomenklatur Tahun</option>
+                    <option value="kro1">KRO1</option>
+                    <option value="kro2">KRO2</option>
+                    <option value="kro3">KRO3</option>
+                    <option value="kro4">KRO4</option>
+                    <option value="kro5">KRO5</option>
+                </select>
+            </div>
+            <div id="ro" class="flex flex-col">
+                <label for="ro" class="text-gray-700 text-sm font-medium mb-2">
+                    RO
+                </label>
+                <select name="ro" id="ro-select" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none mb-5">
+                    <option value="">Pilih Nomenklatur Tahun</option>
+                    <option value="ro1">RO1</option>
+                    <option value="ro2">RO2</option>
+                    <option value="ro3">RO3</option>
+                    <option value="ro4">RO4</option>
+                    <option value="ro5">RO5</option>
+                </select>
+            </div>
         </div>
     </div>
     
