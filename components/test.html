@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Dynamic dengan Fitur Remove</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .form-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 100%;
+      max-width: 600px;
+    }
+    
+    .form-header {
+      background: linear-gradient(135deg, #ff8a8a 0%, #ffcdb2 100%);
+      padding: 25px;
+      text-align: center;
+      color: white;
+    }
+    
+    .form-body {
+      padding: 25px;
+    }
+    
+    .restore-area {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 25px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      min-height: 60px;
+    }
+    
+    .restore-message {
+      color: #6c757d;
+      font-style: italic;
+      margin: auto;
+      text-align: center;
+    }
+    
+    .form-field {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      background: #f9f7fe;
+      border-radius: 12px;
+      padding: 5px 15px;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .form-field:hover {
+      border-color: #ff8a8a;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .form-field label {
+      width: 80px;
+      color: #6d6875;
+      font-weight: 500;
+    }
+    
+    .form-field input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 15px 5px;
+      outline: none;
+      font-size: 16px;
+      color: #444;
+    }
+    
+    .remove-btn {
+      background: linear-gradient(135deg, #ff8a8a 0%, #ff6b6b 100%);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+    }
+    
+    .remove-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(255, 107, 107, 0.4);
+    }
+    
+    .restore-btn {
+      background: linear-gradient(135deg, #90caf9 0%, #42a5f5 100%);
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(66, 165, 245, 0.3);
+    }
+    
+    .restore-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(66, 165, 245, 0.4);
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      background: #4caf50;
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .form-field {
+      animation: fadeIn 0.5s ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <h1 class="text-2xl font-bold"><i class="fas fa-heart mr-2"></i>Formulir Cantik</h1>
+      <p class="mt-2">Kelola field formulir dengan mudah</p>
+    </div>
+    
+    <div class="form-body">
+      <div id="restoreArea" class="restore-area">
+        <p class="restore-message" id="restoreMessage">Field yang dihapus akan muncul di sini</p>
+      </div>
+      
+      <form id="myForm">
+        <div class="form-field" data-field="Nama">
+          <label><i class="fas fa-user"></i> Nama</label>
+          <input type="text" placeholder="Nama lengkap Anda">
+          <button type="button" onclick="removeField(this)" class="remove-btn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="form-field" data-field="Email">
+          <label><i class="fas fa-envelope"></i> Email</label>
+          <input type="email" placeholder="alamat@email.com">
+          <button type="button" onclick="removeField(this)" class="remove-btn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="form-field" data-field="Telepon">
+          <label><i class="fas fa-phone"></i> Telepon</label>
+          <input type="text" placeholder="08xxx">
+          <button type="button" onclick="removeField(this)" class="remove-btn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="form-field" data-field="Alamat">
+          <label><i class="fas fa-home"></i> Alamat</label>
+          <input type="text" placeholder="Alamat lengkap">
+          <button type="button" onclick="removeField(this)" class="remove-btn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="form-field" data-field="Kota">
+          <label><i class="fas fa-city"></i> Kota</label>
+          <input type="text" placeholder="Nama kota">
+          <button type="button" onclick="removeField(this)" class="remove-btn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="notification" id="notification">
+    <i class="fas fa-check-circle mr-2"></i> Field berhasil dikembalikan!
+  </div>
+
+  <script>
+    function removeField(btn) {
+      const fieldDiv = btn.parentElement;
+      const fieldName = fieldDiv.getAttribute("data-field");
+      
+      // Buat tombol restore
+      const restoreBtn = document.createElement("button");
+      restoreBtn.className = "restore-btn";
+      restoreBtn.innerHTML = `<i class="fas fa-redo"></i> ${fieldName}`;
+      restoreBtn.type = "button";
+      restoreBtn.onclick = function() {
+        document.getElementById("myForm").appendChild(fieldDiv);
+        restoreBtn.remove();
+        updateRestoreMessage();
+        showRestoredNotification(fieldName);
+      };
+
+      document.getElementById("restoreArea").appendChild(restoreBtn);
+      document.getElementById("restoreMessage").style.display = "none";
+
+      // Hapus kolom dari form (sementara)
+      fieldDiv.remove();
+    }
+    
+    function updateRestoreMessage() {
+      const restoreArea = document.getElementById("restoreArea");
+      if (restoreArea.children.length === 1) {
+        document.getElementById("restoreMessage").style.display = "block";
+      }
+    }
+    
+    function showRestoredNotification(fieldName) {
+      const notification = document.getElementById("notification");
+      notification.innerHTML = `<i class="fas fa-check-circle mr-2"></i> Field "${fieldName}" berhasil dikembalikan!`;
+      notification.classList.add("show");
+      
+      setTimeout(() => {
+        notification.classList.remove("show");
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
