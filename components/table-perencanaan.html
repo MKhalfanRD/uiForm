@@ -1,0 +1,203 @@
+<div class="">
+  <header class="flex justify-between py-3">
+    <h1 class="page-title">
+      <i class="fas fa-project-diagram"></i>
+      Form Proyek
+    </h1>
+    <a href="#" class="add-button">
+      <i class="fas fa-plus"></i>
+      Proyek Baru
+    </a>
+  </header>
+
+  <div class="card">
+    <div class="controls">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="search-input" placeholder="Cari proyek..." />
+      </div>
+      <div class="filter-controls">
+        <select id="status-filter">
+          <option value="">Semua Status</option>
+          <option value="active">Aktif</option>
+          <option value="inactive">Tidak Aktif</option>
+          <option value="pending">Tertunda</option>
+        </select>
+        <select id="periode-filter">
+          <option value="">Semua Periode</option>
+          <option value="2020-2024">2020-2024</option>
+          <option value="2025-2029">2025-2029</option>
+        </select>
+        <select id="rows-per-page">
+          <option value="5">5 baris</option>
+          <option value="10" selected>10 baris</option>
+          <option value="20">20 baris</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="batch-actions" id="batch-actions">
+      <span class="selected-count" id="selected-count">0 item dipilih</span>
+      <button class="btn btn-delete btn-sm" id="batch-delete">
+        <i class="fas fa-trash"></i> Hapus yang dipilih
+      </button>
+    </div>
+
+    <div class="table-container">
+      <table id="data-table">
+        <thead>
+          <tr>
+            <th>
+              <input type="checkbox" id="select-all" />
+            </th>
+            <th data-sort="id">ID <i class="fas fa-sort"></i></th>
+            <th data-sort="nama">Nama Proyek <i class="fas fa-sort"></i></th>
+            <th data-sort="balai">Balai <i class="fas fa-sort"></i></th>
+            <th data-sort="periode">Periode <i class="fas fa-sort"></i></th>
+            <th data-sort="tahun">Tahun <i class="fas fa-sort"></i></th>
+            <th data-sort="status">Status <i class="fas fa-sort"></i></th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="checkbox" class="row-select" /></td>
+            <td>PRJ001</td>
+            <td class="text-ellipsis">Pembangunan Jaringan Irigasi Daerah X</td>
+            <td>Balai 1</td>
+            <td>2020-2024</td>
+            <td>2023</td>
+            <td><span class="status-badge status-active">Aktif</span></td>
+            <td class="actions">
+              <button class="btn btn-view btn-icon" title="Lihat detail">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn btn-edit btn-icon" title="Edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-delete btn-icon" title="Hapus">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="row-select" /></td>
+            <td>PRJ002</td>
+            <td class="text-ellipsis">
+              Rehabilitasi Jaringan Drainase Perkotaan
+            </td>
+            <td>Balai 2</td>
+            <td>2020-2024</td>
+            <td>2022</td>
+            <td>
+              <span class="status-badge status-inactive">Tidak Aktif</span>
+            </td>
+            <td class="actions">
+              <button class="btn btn-view btn-icon" title="Lihat detail">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn btn-edit btn-icon" title="Edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-delete btn-icon" title="Hapus">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="row-select" /></td>
+            <td>PRJ003</td>
+            <td class="text-ellipsis">
+              Pembangunan Embung Daerah Rawan Kekeringan
+            </td>
+            <td>Balai 3</td>
+            <td>2025-2029</td>
+            <td>2025</td>
+            <td><span class="status-badge status-pending">Tertunda</span></td>
+            <td class="actions">
+              <button class="btn btn-view btn-icon" title="Lihat detail">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn btn-edit btn-icon" title="Edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-delete btn-icon" title="Hapus">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="row-select" /></td>
+            <td>PRJ004</td>
+            <td class="text-ellipsis">Peningkatan Kapasitas Sumber Daya Air</td>
+            <td>Balai 1</td>
+            <td>2025-2029</td>
+            <td>2026</td>
+            <td><span class="status-badge status-active">Aktif</span></td>
+            <td class="actions">
+              <button class="btn btn-view btn-icon" title="Lihat detail">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn btn-edit btn-icon" title="Edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-delete btn-icon" title="Hapus">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="row-select" /></td>
+            <td>PRJ005</td>
+            <td class="text-ellipsis">
+              Pembangunan Infrastruktur Pengendali Banjir
+            </td>
+            <td>Balai 2</td>
+            <td>2020-2024</td>
+            <td>2024</td>
+            <td>
+              <span class="status-badge status-inactive">Tidak Aktif</span>
+            </td>
+            <td class="actions">
+              <button class="btn btn-view btn-icon" title="Lihat detail">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn btn-edit btn-icon" title="Edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-delete btn-icon" title="Hapus">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="loading-indicator" id="loading-indicator">
+      <i class="fas fa-spinner fa-spin"></i> Memuat data...
+    </div>
+
+    <div class="pagination flex justify-between">
+      <div class="pagination-info flex" id="pagination-info">
+        Menampilkan 1-5 dari 5 data
+      </div>
+      <div class="flex flex-row">
+        <div class="pagination-controls">
+          <button class="pagination-btn" id="prev-page" disabled>
+            &laquo;
+          </button>
+          <button class="pagination-btn active">1</button>
+          <button class="pagination-btn" id="next-page" disabled>
+            &raquo;
+          </button>
+        </div>
+        <select id="rows-per-page">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
