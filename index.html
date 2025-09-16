@@ -4,16 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link rel="stylesheet" href="dist/output.css">
-    <link rel="stylesheet" href="css/custom.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="dist/output.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="css/alert.css" />
   </head>
   <body class="bg-gray-100 flex flex-col min-h-screen">
     <!-- Header -->
     <div id="header"></div>
 
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-8 flex flex-col md:flex-row">
+    <main
+      class="flex-grow container mx-auto px-4 py-8 flex flex-col md:flex-row"
+    >
       <!-- Sidebar -->
       <aside class="w-full md:w-1/4 lg:w-1/5 mb-6 md:mb-0 md:mr-6">
         <div class="bg-white rounded-xl shadow-sm p-6">
@@ -27,41 +33,63 @@
 
       <!-- Content Area -->
       <div id="content-area" class="w-full md:w-3/4 lg:w-4/5"></div>
-
+      <!-- Container alert -->
+      <div class="alert-container" id="alert-container"></div>
+      <!-- Modal Konfirmasi -->
+      <div id="delete-modal-overlay" class="delete-modal-overlay">
+        <div class="delete-modal">
+          <div class="delete-modal-header">
+            <i class="fas fa-exclamation-circle modal-icon"></i>
+            <h3 class="delete-modal-title" id="delete-modal-title"></h3>
+          </div>
+          <div class="delete-modal-body">
+            <p class="delete-modal-message" id="delete-modal-message"></p>
+          </div>
+          <div class="delete-modal-footer">
+            <button class="delete-modal-btn cancel" id="delete-modal-cancel">Batal</button>
+            <button class="delete-modal-btn confirm" id="delete-modal-confirm">Hapus</button>
+          </div>
+        </div>
+      </div>
     </main>
     <div id="footer"></div>
 
     <script>
       // Fungsi untuk load halaman ke #content-area
-      function loadPage(page){
+      function loadPage(page) {
         fetch("components/" + page + ".html")
-          .then(response => response.text())
-          .then(data => {
+          .then((response) => response.text())
+          .then((data) => {
             document.getElementById("content-area").innerHTML = data;
+            // Jika yang diload adalah table-perencanaan → aktifkan JS
+            if (page === "table-perencanaan") {
+              initTablePerencanaan();
+            }
           })
           .catch(() => {
-            document.getElementById("content-area").innerHTML = "<p>Halaman tidak ditemukan.</p>";
+            document.getElementById("content-area").innerHTML =
+              "<p>Halaman tidak ditemukan.</p>";
           });
       }
 
       // Load header & profile (statis)
       fetch("components/header.html")
-        .then(res => res.text())
-        .then(data => document.getElementById("header").innerHTML = data);
+        .then((res) => res.text())
+        .then((data) => (document.getElementById("header").innerHTML = data));
 
       fetch("components/profile.html")
-        .then(res => res.text())
-        .then(data => document.getElementById("profile").innerHTML = data);
+        .then((res) => res.text())
+        .then((data) => (document.getElementById("profile").innerHTML = data));
 
       // Load sidebar (setelah itu baru pasang event listener)
       fetch("components/sidebar.html")
-        .then(res => res.text())
-        .then(data => {
+        .then((res) => res.text())
+        .then((data) => {
           document.getElementById("sidebar").innerHTML = data;
 
           // Pasang event listener setelah sidebar ada
-          document.querySelectorAll("#sidebar a[data-page]").forEach(link => {
-            link.addEventListener("click", e => {
+          document.querySelectorAll("#sidebar a[data-page]").forEach((link) => {
+            link.addEventListener("click", (e) => {
               e.preventDefault();
               const page = link.getAttribute("data-page");
               loadPage(page);
@@ -72,11 +100,11 @@
           loadPage("overview");
         });
 
-        fetch("components/footer.html")
-        .then(response => response.text())
-        .then(data => {
+      fetch("components/footer.html")
+        .then((response) => response.text())
+        .then((data) => {
           document.getElementById("footer").innerHTML = data;
-        })
+        });
     </script>
 
     <script src="js/data.js"></script>
@@ -87,6 +115,7 @@
     <script src="js/expand-table.js"></script>
     <script src="js/modal-card.js"></script>
     <script src="js/form-dynamic.js"></script>
+    <script src="js/alert.js"></script>
     <script src="js/table-perencanaan.js"></script>
   </body>
 </html>

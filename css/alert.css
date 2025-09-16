@@ -1,0 +1,103 @@
+/* ========== ALERT STYLE ========== */
+.alert-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 380px;
+}
+
+.alert {
+    padding: 16px 20px;
+    border-radius: 8px;
+    color: white;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.4s cubic-bezier(0.18, 1.25, 0.4, 1);
+    position: relative;
+    overflow: hidden;
+}
+.alert::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 5px; height: 100%;
+}
+.alert.success { background: #2ecc71; }
+.alert.success::before { background: #27ae60; }
+.alert.error { background: #e74c3c; }
+.alert.error::before { background: #c0392b; }
+.alert.warning { background: #f39c12; }
+.alert.warning::before { background: #d35400; }
+.alert.info { background: #3498db; }
+.alert.info::before { background: #2980b9; }
+
+.alert-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.alert-icon { font-size: 20px; }
+.alert-message { font-size: 14px; }
+.alert-close {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    font-size: 16px;
+}
+.alert-close:hover { color: white; }
+
+/* progress bar */
+.alert-progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    width: 100%;
+    transform-origin: left;
+}
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes progress {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+}
+
+/* ========== MODAL STYLE ========== */
+.delete-modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 10000;
+    opacity: 0; visibility: hidden;
+    transition: opacity .3s, visibility .3s;
+}
+.delete-modal-overlay.active { opacity: 1; visibility: visible; }
+.delete-modal {
+    background: #fff;
+    border-radius: 12px;
+    width: 90%; max-width: 450px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all .3s;
+}
+.delete-modal-overlay.active .delete-modal { transform: translateY(0); opacity: 1; }
+
+.delete-modal-header { padding: 20px; display: flex; gap: 12px; }
+.delete-modal-title { font-size: 18px; font-weight: 600; }
+.delete-modal-body { padding: 0 20px 20px; }
+.delete-modal-footer { padding: 10px 20px 20px; display: flex; justify-content: flex-end; gap: 10px; }
+.delete-modal-btn { padding: 8px 16px; border-radius: 6px; cursor: pointer; border: none; font-weight: 500; }
+.delete-modal-btn.confirm { background: #ecf0f1; color: #7f8c8d; }
+.delete-modal-btn.cancel { background: #e74c3c; color: white; }
